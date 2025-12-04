@@ -1,0 +1,3558 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>التداول في الذكاء الاصطناعي</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2a4b8d;
+            --secondary: #4CAF50;
+            --accent: #FFC107;
+            --dark: #1a1a2e;
+            --light: #f8f9fa;
+            --danger: #dc3545;
+            --success: #28a745;
+            --admin: #9c27b0;
+            --warning: #ff9800;
+            --info: #17a2b8;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--dark) 0%, #16213e 100%);
+            color: var(--light);
+            min-height: 100vh;
+            direction: rtl;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            flex: 1;
+        }
+
+        /* تصميم صفحة تسجيل الدخول */
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 80vh;
+        }
+
+        .login-card {
+            background: linear-gradient(135deg, var(--primary) 0%, #3a6bc7 100%);
+            border-radius: 20px;
+            padding: 40px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        .login-card h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .login-card p {
+            margin-bottom: 30px;
+            opacity: 0.8;
+        }
+
+        .login-icon {
+            font-size: 4rem;
+            color: var(--accent);
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: right;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--light);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(255, 193, 7, 0.2);
+        }
+
+        .captcha-container {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .captcha-text {
+            font-size: 1.5rem;
+            letter-spacing: 5px;
+            margin-bottom: 15px;
+            background: linear-gradient(to right, var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: bold;
+        }
+
+        .captcha-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            background-color: rgba(255, 255, 255, 0.05);
+            color: var(--light);
+            text-align: center;
+            font-size: 1.2rem;
+            letter-spacing: 3px;
+        }
+
+        .captcha-input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .admin-code-input {
+            -webkit-text-security: disc;
+            font-family: monospace;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            font-size: 1.1rem;
+        }
+
+        .btn-primary {
+            background-color: var(--secondary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #3d8b40;
+            transform: translateY(-3px);
+            box-shadow: 0 7px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-primary:disabled {
+            background-color: #6c757d;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn-secondary {
+            background-color: var(--accent);
+            color: var(--dark);
+        }
+
+        .btn-secondary:hover {
+            background-color: #e6ac00;
+            transform: translateY(-2px);
+        }
+
+        .btn-admin {
+            background-color: var(--admin);
+            color: white;
+        }
+
+        .btn-admin:hover {
+            background-color: #7b1fa2;
+            transform: translateY(-2px);
+        }
+
+        .btn-warning {
+            background-color: var(--warning);
+            color: white;
+        }
+
+        .btn-warning:hover {
+            background-color: #e68900;
+            transform: translateY(-2px);
+        }
+
+        .btn-danger {
+            background-color: var(--danger);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+            transform: translateY(-2px);
+        }
+
+        .btn-info {
+            background-color: var(--info);
+            color: white;
+        }
+
+        .btn-info:hover {
+            background-color: #138496;
+            transform: translateY(-2px);
+        }
+
+        /* تصميم المحتوى الرئيسي */
+        .main-app {
+            display: none;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            margin-bottom: 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo i {
+            font-size: 2.5rem;
+            color: var(--accent);
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            background: linear-gradient(to right, var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .admin-avatar {
+            background: linear-gradient(135deg, var(--admin) 0%, #e91e63 100%);
+        }
+
+        .user-details h3 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        .user-details p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            padding: 8px 15px;
+            border-radius: 5px;
+        }
+
+        nav a:hover, nav a.active {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--accent);
+        }
+
+        .admin-nav {
+            background-color: rgba(156, 39, 176, 0.2);
+            border-radius: 5px;
+        }
+
+        .admin-nav:hover, .admin-nav.active {
+            background-color: rgba(156, 39, 176, 0.4);
+            color: #e1bee7;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .balance-card {
+            background: linear-gradient(135deg, var(--primary) 0%, #3a6bc7 100%);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .balance-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--accent), var(--secondary));
+        }
+
+        .balance-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .balance-card h2 {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .balance-card h2 i {
+            color: var(--accent);
+        }
+
+        .balance-amount {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .balance-currency {
+            font-size: 1.2rem;
+            opacity: 0.8;
+        }
+
+        .balance-info {
+            margin-top: 15px;
+            font-size: 0.9rem;
+            opacity: 0.8;
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            border-right: 3px solid var(--accent);
+        }
+
+        .auto-increment-info {
+            margin-top: 10px;
+            font-size: 0.85rem;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .transactions {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+        }
+
+        .transactions h2 {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .transactions h2 i {
+            color: var(--accent);
+        }
+
+        .transaction-list {
+            list-style: none;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .transaction-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .transaction-item:last-child {
+            border-bottom: none;
+        }
+
+        .transaction-info h3 {
+            font-size: 1rem;
+            margin-bottom: 5px;
+        }
+
+        .transaction-info p {
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        .transaction-amount {
+            font-weight: 600;
+        }
+
+        .positive {
+            color: var(--success);
+        }
+
+        .negative {
+            color: var(--danger);
+        }
+
+        .no-transactions {
+            text-align: center;
+            padding: 30px 0;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .no-transactions i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* قسم التداول الآن */
+        .trading-section {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            margin-top: 30px;
+            display: none;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .trading-section h2 {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .trading-circle {
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            margin: 0 auto 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 30px rgba(255, 193, 7, 0.5);
+            position: relative;
+            animation: pulse 2s infinite;
+            border: 5px solid var(--accent);
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 20px rgba(255, 193, 7, 0.5); }
+            50% { box-shadow: 0 0 40px rgba(255, 193, 7, 0.8); }
+            100% { box-shadow: 0 0 20px rgba(255, 193, 7, 0.5); }
+        }
+
+        .dollar-sign {
+            font-size: 4rem;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        .trading-time {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+        }
+
+        .trading-profit {
+            margin-top: 10px;
+            font-size: 1.2rem;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 5px 15px;
+            border-radius: 20px;
+        }
+
+        .trading-timer {
+            font-size: 1.5rem;
+            margin-top: 15px;
+            color: var(--accent);
+            font-weight: bold;
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 10px 20px;
+            border-radius: 10px;
+            display: inline-block;
+        }
+
+        .trading-info {
+            margin-top: 15px;
+            font-size: 0.9rem;
+            opacity: 0.8;
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+
+        .trading-amount-input {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .trading-amount-input label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        .trading-amount-input input {
+            width: 200px;
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            text-align: center;
+            font-size: 1.2rem;
+        }
+
+        /* قسم المشرف */
+        .admin-section {
+            background: linear-gradient(135deg, rgba(26, 26, 46, 0.9) 0%, rgba(22, 33, 62, 0.9) 100%);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            margin-top: 30px;
+            display: none;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .admin-section h2 {
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--admin);
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .admin-section h2 i {
+            margin-left: 10px;
+        }
+
+        .admin-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .admin-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .admin-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            border-color: rgba(156, 39, 176, 0.3);
+        }
+
+        .admin-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: var(--admin);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* قسم المستخدمين الذين قاموا بالسحب */
+        .withdraw-users-section {
+            background: linear-gradient(135deg, rgba(26, 26, 46, 0.9) 0%, rgba(22, 33, 62, 0.9) 100%);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            margin-top: 30px;
+            display: none;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .withdraw-users-section h2 {
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--accent);
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .withdraw-users-section h2 i {
+            margin-left: 10px;
+        }
+
+        .withdraw-users-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+            max-height: 600px;
+            overflow-y: auto;
+            padding: 10px;
+        }
+
+        .withdraw-user-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .withdraw-user-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            border-color: rgba(255, 193, 7, 0.3);
+        }
+
+        .withdraw-user-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .withdraw-user-info h4 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: var(--light);
+        }
+
+        .withdraw-amount {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .withdraw-amount.iqd {
+            color: var(--accent);
+        }
+
+        .withdraw-amount.usd {
+            color: var(--success);
+        }
+
+        .withdraw-time {
+            font-size: 0.85rem;
+            opacity: 0.7;
+            color: var(--light);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 10px;
+        }
+
+        .withdraw-time i {
+            color: var(--accent);
+        }
+
+        .last-updated {
+            font-size: 0.9rem;
+            color: var(--accent);
+            text-align: center;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, var(--dark) 0%, #16213e 100%);
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            padding: 30px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            position: relative;
+            animation: modalAppear 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        @keyframes modalAppear {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--light);
+            transition: var(--transition);
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .close-modal:hover {
+            color: var(--accent);
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .modal h2 {
+            margin-bottom: 20px;
+            text-align: center;
+            color: var(--accent);
+            font-size: 1.5rem;
+        }
+
+        .payment-methods {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .payment-method {
+            flex: 1;
+            min-width: 120px;
+            padding: 15px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .payment-method:hover {
+            border-color: var(--accent);
+            transform: translateY(-3px);
+            background-color: rgba(255, 193, 7, 0.1);
+        }
+
+        .payment-method.active {
+            border-color: var(--accent);
+            background-color: rgba(255, 193, 7, 0.15);
+        }
+
+        .payment-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: var(--accent);
+        }
+
+        .file-upload {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .file-upload-btn {
+            background: linear-gradient(135deg, var(--primary) 0%, #3a6bc7 100%);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: var(--transition);
+            border: 1px dashed rgba(255, 255, 255, 0.3);
+            width: 100%;
+        }
+
+        .file-upload-btn:hover {
+            background: linear-gradient(135deg, #3a6bc7 0%, var(--primary) 100%);
+            border-color: var(--accent);
+        }
+
+        .file-upload-input {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+
+        .file-name {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            text-align: center;
+            color: var(--accent);
+        }
+
+        .barcode-preview {
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: 10px;
+            border: 1px solid var(--accent);
+            margin: 15px auto;
+            display: none;
+        }
+
+        /* طلبات السحب في لوحة المشرف */
+        .withdraw-requests-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .withdraw-requests-table th {
+            background-color: rgba(156, 39, 176, 0.3);
+            padding: 15px;
+            text-align: right;
+            color: var(--light);
+            font-weight: 600;
+        }
+
+        .withdraw-requests-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .withdraw-requests-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .withdraw-requests-table tr:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .status-pending {
+            color: var(--warning);
+            font-weight: bold;
+        }
+
+        .status-approved {
+            color: var(--success);
+            font-weight: bold;
+        }
+
+        .status-rejected {
+            color: var(--danger);
+            font-weight: bold;
+        }
+
+        /* التنبيهات */
+        .alert {
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .alert-success {
+            background-color: rgba(40, 167, 69, 0.2);
+            border: 1px solid rgba(40, 167, 69, 0.5);
+            color: #d4edda;
+        }
+
+        .alert-danger {
+            background-color: rgba(220, 53, 69, 0.2);
+            border: 1px solid rgba(220, 53, 69, 0.5);
+            color: #f8d7da;
+        }
+
+        .alert-info {
+            background-color: rgba(23, 162, 184, 0.2);
+            border: 1px solid rgba(23, 162, 184, 0.5);
+            color: #d1ecf1;
+        }
+
+        .alert-warning {
+            background-color: rgba(255, 193, 7, 0.2);
+            border: 1px solid rgba(255, 193, 7, 0.5);
+            color: #fff3cd;
+        }
+
+        /* زر الدعم الفني */
+        .support-footer {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+            padding: 20px 0;
+        }
+
+        .support-btn {
+            background: linear-gradient(135deg, #0088cc 0%, #00aaff 100%);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(0, 136, 204, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .support-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .support-btn:hover::before {
+            left: 100%;
+        }
+
+        .support-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 136, 204, 0.6);
+        }
+
+        .support-icon {
+            font-size: 1.5rem;
+            animation: pulse 2s infinite;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 50px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            opacity: 0.7;
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+
+        .login-message {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 10px;
+            background-color: rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+        }
+
+        /* إضافة زر قسم المستخدمين الذين سحبوا */
+        .withdraw-users-link {
+            background-color: rgba(255, 193, 7, 0.2);
+        }
+
+        .withdraw-users-link:hover, .withdraw-users-link.active {
+            background-color: rgba(255, 193, 7, 0.4);
+            color: var(--accent);
+        }
+
+        /* أزرار صغيرة */
+        .btn-sm {
+            padding: 8px 15px;
+            font-size: 0.9rem;
+            border-radius: 5px;
+            width: auto;
+        }
+
+        /* شريط البحث */
+        .search-box {
+            margin-bottom: 20px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 20px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--admin);
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            header {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            nav ul {
+                gap: 10px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .balance-amount {
+                font-size: 2rem;
+            }
+            
+            .admin-actions {
+                grid-template-columns: 1fr;
+            }
+            
+            .withdraw-users-list {
+                grid-template-columns: 1fr;
+            }
+            
+            .login-card {
+                padding: 30px 20px;
+            }
+            
+            .payment-methods {
+                flex-direction: column;
+            }
+            
+            .payment-method {
+                min-width: 100%;
+            }
+            
+            .trading-circle {
+                width: 180px;
+                height: 180px;
+            }
+            
+            .dollar-sign {
+                font-size: 3rem;
+            }
+            
+            .trading-time {
+                font-size: 1.5rem;
+            }
+            
+            .trading-amount-input input {
+                width: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- صفحة تسجيل الدخول -->
+    <div class="container" id="loginContainer">
+        <div class="login-container">
+            <div class="login-card">
+                <i class="fab fa-telegram login-icon"></i>
+                <h1>التداول في الذكاء الاصطناعي</h1>
+                <p>تسجيل الدخول باستخدام حساب Telegram</p>
+                
+                <div class="form-group">
+                    <label for="telegramUsername">اسم المستخدم في Telegram</label>
+                    <input type="text" id="telegramUsername" class="form-control" placeholder="أدخل اسم المستخدم الخاص بك في Telegram">
+                </div>
+                
+                <div class="form-group">
+                    <label for="fullName">الاسم الثلاثي</label>
+                    <input type="text" id="fullName" class="form-control" placeholder="أدخل اسمك الثلاثي الكامل">
+                </div>
+                
+                <div class="captcha-container">
+                    <div class="captcha-text" id="captchaText">******</div>
+                    <input type="text" id="captchaInput" class="form-control" placeholder="أدخل الكود الخاص بك" maxlength="6">
+                    <p>
+                        <i class="fas fa-lock"></i> الكود مطلوب للدخول (عليك فتح حساب من المشرف)
+                    </p>
+                </div>
+                
+                <div class="login-message">
+                    <i class="fas fa-info-circle"></i>
+                    يمكنك تسجيل الدخول فقط باستخدام الكود الذي يعطيه لك المشرف
+                </div>
+                
+                <button class="btn btn-primary" id="loginBtn" disabled>
+                    <i class="fas fa-check"></i> تسجيل الدخول
+                </button>
+                
+                <!-- زر تسجيل دخول المشرف -->
+                <button class="btn btn-admin" id="showAdminLoginBtn" style="margin-top: 15px;">
+                    <i class="fas fa-user-shield"></i> تسجيل دخول المشرف
+                </button>
+                
+                <!-- قسم تسجيل دخول المشرف (مخفي في البداية) -->
+                <div id="adminLoginSection" style="display: none; margin-top: 20px; padding: 20px; background-color: rgba(0,0,0,0.2); border-radius: 10px; border: 1px solid rgba(156, 39, 176, 0.3);">
+                    <h3 style="margin-bottom: 15px; color: var(--admin); text-align: center;">
+                        <i class="fas fa-user-shield"></i> تسجيل دخول المشرف
+                    </h3>
+                    <div class="form-group">
+                        <label for="adminFullName">الاسم الثلاثي للمشرف</label>
+                        <input type="text" id="adminFullName" class="form-control" placeholder="أدخل الاسم الثلاثي للمشرف">
+                    </div>
+                    <div class="form-group">
+                        <label for="adminCode">كود المشرف (محمي⛔)</label>
+                        <input type="password" id="adminCode" class="form-control admin-code-input" placeholder="أدخل كود المشرف ">
+                    </div>
+                    <button class="btn btn-admin" id="adminLoginBtn">
+                        <i class="fas fa-sign-in-alt"></i> دخول لوحة المشرفين
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- التطبيق الرئيسي -->
+    <div class="container main-app" id="mainApp">
+        <header>
+            <div class="logo">
+                <i class="fas fa-robot"></i>
+                <h1>التداول في الذكاء الاصطناعي</h1>
+            </div>
+            <div class="user-info">
+                <div class="user-avatar" id="userAvatar">U</div>
+                <div class="user-details">
+                    <h3 id="userFullName">اسم المستخدم</h3>
+                    <p id="userTelegram">@telegram</p>
+                </div>
+            </div>
+        </header>
+
+        <nav>
+            <ul>
+                <li><a href="#" class="active" id="homeLink">الرئيسية</a></li>
+                <li><a href="#" id="tradingLink">التداول الآن</a></li>
+                <li><a href="#" id="withdrawUsersLink" class="withdraw-users-link">
+                    <i class="fas fa-users"></i> المستخدمين الذين سحبوا
+                </a></li>
+                <li><a href="#" id="adminLink" class="admin-nav" style="display: none;">
+                    <i class="fas fa-user-shield"></i> لوحة المشرف
+                </a></li>
+                <li><a href="#" id="logoutLink">تسجيل الخروج</a></li>
+            </ul>
+        </nav>
+
+        <!-- المحتوى الرئيسي للمستخدمين -->
+        <div class="main-content" id="mainContent">
+            <div class="balance-card">
+                <h2><i class="fas fa-wallet"></i> رصيد الحساب</h2>
+                <div class="balance-amount" id="balanceIQD"><span class="balance-value">1,000</span> <span class="balance-currency">ألف دينار عراقي</span></div>
+                <div class="balance-amount" id="balanceUSD"><span class="balance-value">50,000</span> <span class="balance-currency">دولار أمريكي</span></div>
+                
+                <div class="balance-info" id="balanceInfo">
+                    <i class="fas fa-info-circle"></i>
+                    يمكنك زيادة رصيدك عن طريق التداول أو الاتصال بالمشرف
+                </div>
+                
+                <div class="auto-increment-info" id="autoIncrementInfo">
+                    <i class="fas fa-clock"></i>
+                    <span id="autoIncrementText">الرصيد يتصاعد تلقائياً</span>
+                </div>
+                
+                <div class="actions">
+                    <button class="btn btn-primary" id="addFundsBtn">
+                        <i class="fas fa-plus-circle"></i> إضافة أموال
+                    </button>
+                    <button class="btn btn-secondary" id="withdrawBtn">
+                        <i class="fas fa-money-bill-wave"></i> سحب أموال
+                    </button>
+                </div>
+            </div>
+
+            <div class="transactions">
+                <h2><i class="fas fa-history"></i> آخر التعاملات</h2>
+                <div class="no-transactions" id="noTransactions">
+                    <i class="fas fa-exchange-alt"></i>
+                    <h3>لا توجد تعاملات</h3>
+                    <p>لأنك لم تقم في التداول أو الإيداع</p>
+                </div>
+                <ul class="transaction-list" id="transactionList">
+                    <!-- سيتم إضافة المعاملات هنا -->
+                </ul>
+            </div>
+        </div>
+
+        <!-- قسم التداول الآن -->
+        <div class="trading-section" id="tradingSection">
+            <h2><i class="fas fa-chart-line"></i> التداول الآن</h2>
+            <div class="trading-circle">
+                <div class="dollar-sign">$</div>
+                <div class="trading-time" id="tradingTime">00:00:00</div>
+                <div class="trading-profit" id="tradingProfit">الربح كل <span id="tradingInterval">24</span> ساعة</div>
+            </div>
+            
+            <div class="trading-amount-input" id="tradingAmountInput">
+                <label for="tradingAmount">المبلغ المراد التداول به (ألف دينار)</label>
+                <input type="number" id="tradingAmount" placeholder="أدخل المبلغ" min="1" max="1000">
+            </div>
+            
+            <div class="trading-timer" id="tradingTimer">24:00:00</div>
+            <div class="trading-info" id="tradingInfo">
+                <i class="fas fa-info-circle"></i>
+                عند انتهاء الوقت، ستزداد أرباحك بمقدار <span id="profitAmount">1</span> ألف دينار عراقي
+            </div>
+            <button class="btn btn-primary" style="margin-top: 20px;" id="startTradingBtn">
+                <i class="fas fa-play"></i> بدء التداول
+            </button>
+        </div>
+
+        <!-- قسم المستخدمين الذين قاموا بالسحب -->
+        <div class="withdraw-users-section" id="withdrawUsersSection">
+            <h2>
+                <i class="fas fa-users"></i> المستخدمين الذين قاموا بالسحب
+            </h2>
+            
+            <div class="last-updated" id="lastUpdated">
+                <i class="fas fa-sync-alt"></i> يتم تحديث القائمة كل 30 ثانية
+            </div>
+            
+            <div class="withdraw-users-list" id="withdrawUsersList">
+                <!-- سيتم ملؤها بالبيانات -->
+            </div>
+        </div>
+
+        <!-- قسم المشرف -->
+        <div class="admin-section" id="adminSection">
+            <h2>
+                <i class="fas fa-user-shield"></i> لوحة تحكم المشرف
+            </h2>
+            
+            <div id="adminAlert"></div>
+            
+            <div class="admin-actions">
+                <div class="admin-card">
+                    <h3><i class="fas fa-plus-circle"></i> إضافة رصيد</h3>
+                    <div class="form-group">
+                        <label for="adminUserCode">كود المستخدم</label>
+                        <input type="text" id="adminUserCode" class="form-control" placeholder="أدخل كود المستخدم">
+                    </div>
+                    <div class="form-group">
+                        <label for="adminAddAmountIQD">المبلغ (ألف دينار عراقي)</label>
+                        <input type="number" id="adminAddAmountIQD" class="form-control" placeholder="أدخل المبلغ">
+                    </div>
+                    <div class="form-group">
+                        <label for="adminAddAmountUSD">المبلغ (دولار أمريكي)</label>
+                        <input type="number" id="adminAddAmountUSD" class="form-control" placeholder="أدخل المبلغ">
+                    </div>
+                    <button class="btn btn-success" id="adminAddBalanceBtn">
+                        <i class="fas fa-plus"></i> إضافة رصيد
+                    </button>
+                </div>
+                
+                <div class="admin-card">
+                    <h3><i class="fas fa-minus-circle"></i> خصم رصيد</h3>
+                    <div class="form-group">
+                        <label for="adminUserCodeDeduct">كود المستخدم</label>
+                        <input type="text" id="adminUserCodeDeduct" class="form-control" placeholder="أدخل كود المستخدم">
+                    </div>
+                    <div class="form-group">
+                        <label for="adminDeductAmountIQD">المبلغ (ألف دينار عراقي)</label>
+                        <input type="number" id="adminDeductAmountIQD" class="form-control" placeholder="أدخل المبلغ">
+                    </div>
+                    <div class="form-group">
+                        <label for="adminDeductAmountUSD">المبلغ (دولار أمريكي)</label>
+                        <input type="number" id="adminDeductAmountUSD" class="form-control" placeholder="أدخل المبلغ">
+                    </div>
+                    <button class="btn btn-danger" id="adminDeductBalanceBtn">
+                        <i class="fas fa-minus"></i> خصم رصيد
+                    </button>
+                </div>
+                
+                <div class="admin-card">
+                    <h3><i class="fas fa-user-plus"></i> إنشاء مستخدم جديد</h3>
+                    <div class="form-group">
+                        <label for="newUserTelegram">اسم المستخدم في التليجرام</label>
+                        <input type="text" id="newUserTelegram" class="form-control" placeholder="@username">
+                    </div>
+                    <div class="form-group">
+                        <label for="newUserName">الاسم الثلاثي</label>
+                        <input type="text" id="newUserName" class="form-control" placeholder="الاسم الكامل">
+                    </div>
+                    <div class="form-group">
+                        <label for="newUserCode">الكود المخصص (6 أحرف)</label>
+                        <input type="text" id="newUserCode" class="form-control" placeholder="أدخل كود مكون من 6 أحرف" maxlength="6">
+                    </div>
+                    <button class="btn btn-primary" id="adminCreateUserBtn">
+                        <i class="fas fa-plus"></i> إنشاء مستخدم
+                    </button>
+                </div>
+                
+                <div class="admin-card">
+                    <h3><i class="fas fa-cogs"></i> إعدادات التصاعد التلقائي</h3>
+                    <div class="form-group">
+                        <label for="autoIncrementUserCode">كود المستخدم</label>
+                        <input type="text" id="autoIncrementUserCode" class="form-control" placeholder="أدخل كود المستخدم">
+                    </div>
+                    <div class="form-group">
+                        <label for="autoIncrementHoursIQD">عدد الساعات للتصاعد (دينار)</label>
+                        <input type="number" id="autoIncrementHoursIQD" class="form-control" placeholder="مثال: 24" value="24">
+                    </div>
+                    <div class="form-group">
+                        <label for="autoIncrementAmountIQD">المبلغ المضاف كل فترة (ألف دينار)</label>
+                        <input type="number" id="autoIncrementAmountIQD" class="form-control" placeholder="مثال: 1" value="1">
+                    </div>
+                    <div class="form-group">
+                        <label for="autoIncrementHoursUSD">عدد الساعات للتصاعد (دولار)</label>
+                        <input type="number" id="autoIncrementHoursUSD" class="form-control" placeholder="مثال: 24" value="24">
+                    </div>
+                    <div class="form-group">
+                        <label for="autoIncrementAmountUSD">المبلغ المضاف كل فترة (دولار)</label>
+                        <input type="number" id="autoIncrementAmountUSD" class="form-control" placeholder="مثال: 8" value="8">
+                    </div>
+                    <button class="btn btn-info" id="adminSetAutoIncrementBtn">
+                        <i class="fas fa-cog"></i> تعيين التصاعد التلقائي
+                    </button>
+                </div>
+                
+                <div class="admin-card">
+                    <h3><i class="fas fa-cogs"></i> تحديد الوقت التصاعدي للتداول</h3>
+                    <div class="form-group">
+                        <label for="tradingTimeUserCode">كود المستخدم</label>
+                        <input type="text" id="tradingTimeUserCode" class="form-control" placeholder="أدخل كود المستخدم">
+                    </div>
+                    <div class="form-group">
+                        <label for="tradingTimeHours">عدد الساعات للتداول</label>
+                        <input type="number" id="tradingTimeHours" class="form-control" placeholder="مثال: 24" value="24">
+                    </div>
+                    <div class="form-group">
+                        <label for="tradingTimeProfit">مبلغ الربح (ألف دينار)</label>
+                        <input type="number" id="tradingTimeProfit" class="form-control" placeholder="مثال: 1" value="1">
+                    </div>
+                    <button class="btn btn-warning" id="adminSetTradingTimeBtn">
+                        <i class="fas fa-clock"></i> تعيين وقت التداول
+                    </button>
+                </div>
+                
+                <div class="admin-card">
+                    <h3><i class="fas fa-money-bill-wave"></i> تحديد حدود السحب</h3>
+                    <div class="form-group">
+                        <label for="minWithdrawIQD">الحد الأدنى للسحب (ألف دينار)</label>
+                        <input type="number" id="minWithdrawIQD" class="form-control" placeholder="مثال: 150" value="150">
+                    </div>
+                    <div class="form-group">
+                        <label for="maxWithdrawIQD">الحد الأقصى للسحب (ألف دينار)</label>
+                        <input type="number" id="maxWithdrawIQD" class="form-control" placeholder="مثال: 1000" value="1000">
+                    </div>
+                    <div class="form-group">
+                        <label for="minWithdrawUSD">الحد الأدنى للسحب (دولار)</label>
+                        <input type="number" id="minWithdrawUSD" class="form-control" placeholder="مثال: 120" value="120">
+                    </div>
+                    <div class="form-group">
+                        <label for="maxWithdrawUSD">الحد الأقصى للسحب (دولار)</label>
+                        <input type="number" id="maxWithdrawUSD" class="form-control" placeholder="مثال: 1000" value="1000">
+                    </div>
+                    <button class="btn btn-warning" id="adminSetWithdrawLimitsBtn">
+                        <i class="fas fa-sliders-h"></i> تعيين حدود السحب
+                    </button>
+                </div>
+            </div>
+            
+            <div class="users-management" style="margin-top: 40px;">
+                <h3><i class="fas fa-money-bill-wave"></i> طلبات السحب المعلقة</h3>
+                
+                <div class="search-box">
+                    <input type="text" id="adminSearchWithdraw" class="search-input" placeholder="ابحث في طلبات السحب...">
+                </div>
+                
+                <div style="overflow-x: auto;">
+                    <table class="withdraw-requests-table" id="withdrawRequestsTable">
+                        <thead>
+                            <tr>
+                                <th>المستخدم</th>
+                                <th>طريقة السحب</th>
+                                <th>المبلغ</th>
+                                <th>المعلومات</th>
+                                <th>الحالة</th>
+                                <th>التاريخ</th>
+                                <th>الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="withdrawRequestsList">
+                            <!-- سيتم ملؤها بالبيانات -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="users-management" style="margin-top: 40px;">
+                <h3><i class="fas fa-users"></i> إدارة المستخدمين</h3>
+                
+                <div class="search-box">
+                    <input type="text" id="adminSearchUser" class="search-input" placeholder="ابحث عن مستخدم بالاسم أو الكود...">
+                </div>
+                
+                <div style="overflow-x: auto;">
+                    <table class="withdraw-requests-table" id="adminUsersTable">
+                        <thead>
+                            <tr>
+                                <th>اسم المستخدم</th>
+                                <th>الاسم الثلاثي</th>
+                                <th>الكود المخصص</th>
+                                <th>رصيد الدينار</th>
+                                <th>رصيد الدولار</th>
+                                <th>تاريخ الإنشاء</th>
+                                <th>الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminUsersList">
+                            <!-- سيتم ملؤها بالبيانات -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal إضافة أموال -->
+        <div class="modal" id="addFundsModal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h2><i class="fas fa-plus-circle"></i> إضافة أموال</h2>
+                <p>لإضافة أموال إلى حسابك، يرجى التواصل مع المشرف عبر التليجرام:</p>
+                
+                <div class="telegram-info" style="padding: 15px; background: rgba(0, 136, 204, 0.1); border-radius: 10px; margin: 20px 0;">
+                    <a href="https://t.me/sseerrv" target="_blank">
+                        <i class="fab fa-telegram"></i> t.me/sseerrv
+                    </a>
+                </div>
+                
+                <p>سيقوم المشرف بمساعدتك في إتمام عملية الإيداع بسرعة وأمان.</p>
+                
+                <button class="btn btn-primary btn-block" id="closeAddModal">
+                    <i class="fas fa-check"></i> فهمت
+                </button>
+            </div>
+        </div>
+
+        <!-- Modal سحب أموال -->
+        <div class="modal" id="withdrawModal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h2><i class="fas fa-money-bill-wave"></i> سحب الأموال</h2>
+                
+                <div id="withdrawAlert" style="margin-bottom: 20px;"></div>
+                
+                <div class="form-group">
+                    <label>اختر طريقة السحب:</label>
+                    <div class="payment-methods">
+                        <div class="payment-method active" id="zainCashMethod">
+                            <div class="payment-icon">
+                                <i class="fas fa-mobile-alt"></i>
+                            </div>
+                            <div>زين كاش</div>
+                        </div>
+                        <div class="payment-method" id="asiaCellMethod">
+                            <div class="payment-icon">
+                                <i class="fas fa-sim-card"></i>
+                            </div>
+                            <div>آسيا سيل</div>
+                        </div>
+                        <div class="payment-method" id="qiCardMethod">
+                            <div class="payment-icon">
+                                <i class="fas fa-credit-card"></i>
+                            </div>
+                            <div>Qi Card</div>
+                        </div>
+                        <div class="payment-method" id="binanceMethod">
+                            <div class="payment-icon">
+                                <i class="fab fa-bitcoin"></i>
+                            </div>
+                            <div>Binance</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- نموذج زين كاش -->
+                <div id="zainCashForm">
+                    <div class="form-group">
+                        <label for="zainCashNumber">رقم زين كاش</label>
+                        <input type="text" id="zainCashNumber" class="form-control" placeholder="أدخل رقم زين كاش">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>رفع صورة الباركود</label>
+                        <div class="file-upload">
+                            <button class="file-upload-btn" type="button">
+                                <i class="fas fa-cloud-upload-alt"></i> اختر صورة الباركود
+                            </button>
+                            <input type="file" id="barcodeUpload" class="file-upload-input" accept="image/*">
+                        </div>
+                        <div class="file-name" id="barcodeFileName"></div>
+                        <img id="barcodePreview" class="barcode-preview" src="" alt="معاينة الباركود">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="withdrawAmountIQD">المبلغ المراد سحبه (ألف دينار عراقي)</label>
+                        <input type="number" id="withdrawAmountIQD" class="form-control" placeholder="من 150 إلى 1000 ألف دينار">
+                        <small style="color: var(--accent); display: block; margin-top: 5px;" id="withdrawLimitsIQD">الحد الأدنى: 150 ألف دينار | الحد الأقصى: 1000 ألف دينار</small>
+                    </div>
+                </div>
+                
+                <!-- نموذج آسيا سيل -->
+                <div id="asiaCellForm" style="display: none;">
+                    <div class="form-group">
+                        <label for="asiaCellNumber">رقم آسيا سيل</label>
+                        <input type="text" id="asiaCellNumber" class="form-control" placeholder="أدخل رقم آسيا سيل">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="asiaWithdrawAmountIQD">المبلغ المراد سحبه (ألف دينار عراقي)</label>
+                        <input type="number" id="asiaWithdrawAmountIQD" class="form-control" placeholder="من 150 إلى 1000 ألف دينار">
+                        <small style="color: var(--accent); display: block; margin-top: 5px;">الحد الأدنى: 150 ألف دينار | الحد الأقصى: 1000 ألف دينار</small>
+                    </div>
+                </div>
+                
+                <!-- نموذج Qi Card -->
+                <div id="qiCardForm" style="display: none;">
+                    <div class="form-group">
+                        <label for="qiCardNumber">رقم بطاقة Qi Card</label>
+                        <input type="text" id="qiCardNumber" class="form-control" placeholder="أدخل رقم البطاقة">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="qiCardName">اسم صاحب البطاقة</label>
+                        <input type="text" id="qiCardName" class="form-control" placeholder="أدخل اسم صاحب البطاقة">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="qiCardAmountIQD">المبلغ المراد سحبه (ألف دينار عراقي)</label>
+                        <input type="number" id="qiCardAmountIQD" class="form-control" placeholder="من 150 إلى 1000 ألف دينار">
+                        <small style="color: var(--accent); display: block; margin-top: 5px;">الحد الأدنى: 150 ألف دينار | الحد الأقصى: 1000 ألف دينار</small>
+                    </div>
+                </div>
+                
+                <!-- نموذج Binance -->
+                <div id="binanceForm" style="display: none;">
+                    <div class="form-group">
+                        <label for="binanceId">معرف Binance</label>
+                        <input type="text" id="binanceId" class="form-control" placeholder="أدخل معرف Binance">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="binanceName">اسم صاحب الحساب</label>
+                        <input type="text" id="binanceName" class="form-control" placeholder="أدخل اسم صاحب الحساب">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="binanceAmountUSD">المبلغ المراد سحبه (دولار أمريكي)</label>
+                        <input type="number" id="binanceAmountUSD" class="form-control" placeholder="من 120 إلى 1000 دولار">
+                        <small style="color: var(--success); display: block; margin-top: 5px;" id="withdrawLimitsUSD">الحد الأدنى: 120 دولار | الحد الأقصى: 1000 دولار</small>
+                    </div>
+                </div>
+                
+                <button class="btn btn-primary btn-block" id="confirmWithdraw">
+                    <i class="fas fa-paper-plane"></i> تأكيد السحب
+                </button>
+            </div>
+        </div>
+
+        <!-- زر الدعم الفني -->
+        <div class="support-footer">
+            <a href="https://t.me/sseerrv" target="_blank" class="support-btn">
+                <i class="fas fa-headset support-icon"></i>
+                الدعم الفني
+            </a>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2023 التداول في الذكاء الاصطناعي. جميع الحقوق محفوظة.</p>
+    </footer>
+
+    <script>
+        // معلومات المشرف الرئيسي
+        const ADMIN_INFO = {
+            name: "ايهاب حسين كاظم",
+            adminCode: "BFEYIO", // كود المشرف الجديد
+            userCode: "ADMIN01",
+            isAdmin: true
+        };
+
+        // إعدادات النظام
+        const SYSTEM_SETTINGS = {
+            minWithdrawIQD: 150,  // الحد الأدنى للسحب (بالآلاف)
+            maxWithdrawIQD: 1000, // الحد الأقصى للسحب (بالآلاف)
+            minWithdrawUSD: 120,  // الحد الأدنى للسحب (دولار)
+            maxWithdrawUSD: 1000  // الحد الأقصى للسحب (دولار)
+        };
+
+        // قائمة الأسماء العراقية
+        const IRAQI_NAMES = [
+            // أسماء ذكور
+            "أحمد محمد", "علي حسن", "مصطفى كريم", "حسين عبدالله", "عمر خالد", 
+            "محمود سعد", "جلال رضا", "قصي ناصر", "وسام حيدر", "صلاح الدين",
+            "نبيل رافع", "رائد فاضل", "حيدر مهدي", "كرار جواد", "مهدي صالح",
+            "هادي كاظم", "عبدالكريم جوهر", "عبدالرحمن طارق", "ياسين وليد", "مهند سامي",
+            "أنس باسل", "باسل ثامر", "جاسم حارث", "حازم ربيع", "ربيع سامي",
+            "سامي شاكر", "شاكر صادق", "صادق طارق", "طارق عبدالعزيز", "عبدالعزيز عبدالجبار",
+            "عبدالجبار عبدالستار", "عبدالستار عبدالغني", "عبدالغني عبدالملك", "عبدالملك عبدالهادي",
+            "عبدالهادي عبدالوهاب", "عبدالوهاب عثمان", "عثمان عصام", "عصام علاء", "علاء فاضل",
+            "فاضل فؤاد", "فؤاد فوزي", "فوزي قصي", "قصي قيس", "قيس لؤي",
+            "لؤي مالك", "مالك مؤيد", "مؤيد ناظم", "ناظم نبيل", "نبيل نجيب",
+            
+            // أسماء إناث
+            "فاطمة الزهراء", "زينب خديجة", "عائشة مريم", "مريم سارة", "خديجة هدى",
+            "سارة نور", "هدى لمى", "نور رنا", "لمى شيماء", "رنا أسماء",
+            "شيماء حنين", "أسماء جنى", "حنين بتول", "جنى رغد", "بتول ريناد",
+            "رغد سجى", "ريناد شذى", "سجى ضحى", "شذى عتاب", "ضحى غادة",
+            "عتاب فدوى", "غادة كاملة", "فدوى ليلى", "كاملة مها", "ليلى نهى",
+            "مها هبة", "نهى هند", "هبة ولاء", "هند إيمان", "ولاء أمل",
+            "إيمان إخلاص", "أمل بشرى", "إخلاص جمانة", "بشرى حياة", "جمانة خولة",
+            "حياة ديمة", "خولة رانية", "ديمة زهراء", "رانية سلمى", "زهراء شهد",
+            "سلمى صبا", "شهد عالية", "صبا فريال", "عالية قمر", "فريال لينا",
+            "قمر ميار", "لينا نادية", "ميار نوال", "نادية هديل", "نوال ياسمين"
+        ];
+
+        // قائمة الكنى العراقية
+        const IRAQI_SURNAMES = [
+            "العبادي", "المالكي", "العلياوي", "الجعفري", "الحسيني", "الزيدي", "العبيدي",
+            "النجفي", "الكربلائي", "البغدادي", "الموصلي", "البصري", "الكرخي", "الرصافي",
+            "الديواني", "الرمادي", "الفلوجي", "التكريتي", "الأنباري", "السامرائي", "الحلة",
+            "الكاظمي", "العامري", "الجبوري", "الشمري", "الخفاجي", "الدايني", "الزوبعي",
+            "الطائي", "اللامي", "الكناني", "العزاوي", "السلطاني", "الجنابي", "الرفاعي",
+            "القطيفي", "النجار", "الحداد", "الخياط", "الصفار", "الخضيري", "الدهان", "الطوخي",
+            "العباسي", "الحسني", "الرفيعي", "السعدي", "الظالمي", "الغريباوي", "الفارسي"
+        ];
+
+        // أوقات السحب
+        const WITHDRAW_TIMES = [
+            "منذ 5 ثواني", "منذ 30 ثانية", "منذ دقيقة", "منذ 5 دقائق", "منذ 15 دقيقة", 
+            "منذ 30 دقيقة", "منذ ساعة", "منذ ساعتين", "منذ 5 ساعات", "منذ 10 ساعات", 
+            "منذ يوم", "منذ يومين", "منذ 3 أيام", "منذ 5 أيام", "منذ أسبوع"
+        ];
+
+        // تهيئة النظام
+        function initializeSystem() {
+            // تحميل المستخدمين المخزنين
+            const storedUsers = JSON.parse(localStorage.getItem('trading_users') || '[]');
+            
+            // التحقق من وجود المشرف وإصلاحه إذا كان مفقودًا
+            let hasAdmin = false;
+            for (let user of storedUsers) {
+                if (user.isAdmin && user.fullName === ADMIN_INFO.name) {
+                    hasAdmin = true;
+                    break;
+                }
+            }
+            
+            if (!hasAdmin) {
+                // إنشاء المستخدم الافتراضي للمشرف
+                const adminUser = {
+                    telegramUsername: "admin_ehab",
+                    fullName: ADMIN_INFO.name,
+                    userCode: ADMIN_INFO.userCode,
+                    adminCode: ADMIN_INFO.adminCode,
+                    balanceIQD: 1000000,
+                    balanceUSD: 50000,
+                    isAdmin: true,
+                    transactions: [],
+                    tradingActive: false,
+                    tradingAmount: 0,
+                    tradingStartTime: '',
+                    tradingHours: 24,
+                    tradingProfit: 1,
+                    autoIncrementIQD: { hours: 24, amount: 1, lastIncrement: Date.now() },
+                    autoIncrementUSD: { hours: 24, amount: 8, lastIncrement: Date.now() },
+                    createdAt: new Date().toISOString()
+                };
+                
+                // إضافة المشرف إلى قائمة المستخدمين
+                storedUsers.push(adminUser);
+                localStorage.setItem('trading_users', JSON.stringify(storedUsers));
+            }
+            
+            // تهيئة طلبات السحب إذا لم تكن موجودة
+            if (!localStorage.getItem('withdraw_requests')) {
+                localStorage.setItem('withdraw_requests', JSON.stringify([]));
+            }
+            
+            // تهيئة تاريخ معاملات السحب
+            if (!localStorage.getItem('withdraw_history')) {
+                localStorage.setItem('withdraw_history', JSON.stringify([]));
+            }
+            
+            // تهيئة إعدادات النظام
+            if (!localStorage.getItem('system_settings')) {
+                localStorage.setItem('system_settings', JSON.stringify(SYSTEM_SETTINGS));
+            }
+        }
+
+        // تحويل الدينار إلى آلاف
+        function toThousandsIQD(amount) {
+            return Math.floor(amount / 1000);
+        }
+
+        // تحويل الآلاف إلى دينار (للتخزين)
+        function fromThousandsIQD(thousands) {
+            return thousands * 1000;
+        }
+
+        // تنسيق المبلغ بالآلاف
+        function formatIQD(amount) {
+            return toThousandsIQD(amount).toLocaleString();
+        }
+
+        // البحث عن مستخدم بواسطة الكود
+        function findUserByCode(code) {
+            const users = JSON.parse(localStorage.getItem('trading_users') || '[]');
+            return users.find(user => user.userCode === code);
+        }
+
+        // البحث عن مستخدم بواسطة اسم المستخدم
+        function findUserByUsername(username) {
+            const users = JSON.parse(localStorage.getItem('trading_users') || '[]');
+            return users.find(user => user.telegramUsername === username);
+        }
+
+        // تحديث بيانات المستخدم
+        function updateUserData(userCode, updatedData) {
+            const users = JSON.parse(localStorage.getItem('trading_users') || '[]');
+            const userIndex = users.findIndex(user => user.userCode === userCode);
+            
+            if (userIndex !== -1) {
+                users[userIndex] = { ...users[userIndex], ...updatedData };
+                localStorage.setItem('trading_users', JSON.stringify(users));
+                return true;
+            }
+            return false;
+        }
+
+        // الحصول على جميع المستخدمين (عدا المشرف)
+        function getAllUsers() {
+            const users = JSON.parse(localStorage.getItem('trading_users') || '[]');
+            return users.filter(user => !user.isAdmin);
+        }
+
+        // الحصول على جميع طلبات السحب
+        function getAllWithdrawRequests() {
+            return JSON.parse(localStorage.getItem('withdraw_requests') || '[]');
+        }
+
+        // تحديث طلبات السحب
+        function updateWithdrawRequests(requests) {
+            localStorage.setItem('withdraw_requests', JSON.stringify(requests));
+        }
+
+        // إضافة طلب سحب جديد
+        function addWithdrawRequest(request) {
+            const requests = getAllWithdrawRequests();
+            request.id = Date.now().toString();
+            request.status = 'pending'; // pending, approved, rejected
+            request.createdAt = new Date().toISOString();
+            requests.push(request);
+            updateWithdrawRequests(requests);
+            return request.id;
+        }
+
+        // تحديث حالة طلب السحب
+        function updateWithdrawRequestStatus(requestId, status, adminNote = '') {
+            const requests = getAllWithdrawRequests();
+            const requestIndex = requests.findIndex(req => req.id === requestId);
+            
+            if (requestIndex !== -1) {
+                requests[requestIndex].status = status;
+                requests[requestIndex].processedAt = new Date().toISOString();
+                requests[requestIndex].adminNote = adminNote;
+                
+                // إذا تم الموافقة، نقوم بخصم المبلغ من حساب المستخدم
+                if (status === 'approved') {
+                    const user = findUserByCode(requests[requestIndex].userCode);
+                    if (user) {
+                        if (requests[requestIndex].currency === 'IQD') {
+                            user.balanceIQD -= fromThousandsIQD(requests[requestIndex].amount);
+                        } else if (requests[requestIndex].currency === 'USD') {
+                            user.balanceUSD -= requests[requestIndex].amount;
+                        }
+                        updateUserData(user.userCode, {
+                            balanceIQD: user.balanceIQD,
+                            balanceUSD: user.balanceUSD
+                        });
+                        
+                        // إضافة معاملة
+                        addTransaction(user.userCode, {
+                            type: 'سحب أموال',
+                            amount: requests[requestIndex].amount,
+                            currency: requests[requestIndex].currency,
+                            date: new Date().toLocaleString('ar-IQ'),
+                            method: requests[requestIndex].method,
+                            status: 'مقبول'
+                        });
+                        
+                        // إضافة إلى تاريخ السحب
+                        addToWithdrawHistory({
+                            userName: user.fullName,
+                            userTelegram: user.telegramUsername,
+                            amount: requests[requestIndex].amount,
+                            currency: requests[requestIndex].currency,
+                            method: requests[requestIndex].method,
+                            date: new Date().toISOString()
+                        });
+                    }
+                }
+                
+                updateWithdrawRequests(requests);
+                return true;
+            }
+            return false;
+        }
+
+        // إضافة إلى تاريخ السحب
+        function addToWithdrawHistory(withdrawData) {
+            const history = JSON.parse(localStorage.getItem('withdraw_history') || '[]');
+            history.unshift(withdrawData);
+            // نحدد الحد الأقصى لـ 3000 عملية سحب
+            if (history.length > 3000) {
+                history.pop();
+            }
+            localStorage.setItem('withdraw_history', JSON.stringify(history));
+        }
+
+        // الحصول على تاريخ السحب
+        function getWithdrawHistory(limit = 50) {
+            const history = JSON.parse(localStorage.getItem('withdraw_history') || '[]');
+            return history.slice(0, limit);
+        }
+
+        // توليد بيانات السحب الوهمية
+        function generateWithdrawHistory(count = 3000) {
+            const history = [];
+            const now = Date.now();
+            const settings = JSON.parse(localStorage.getItem('system_settings') || JSON.stringify(SYSTEM_SETTINGS));
+            
+            for (let i = 0; i < count; i++) {
+                const isMale = Math.random() > 0.5;
+                const firstName = isMale ? 
+                    IRAQI_NAMES[Math.floor(Math.random() * 50)] : // أسماء ذكور
+                    IRAQI_NAMES[50 + Math.floor(Math.random() * 50)]; // أسماء إناث
+                const lastName = IRAQI_SURNAMES[Math.floor(Math.random() * IRAQI_SURNAMES.length)];
+                const fullName = `${firstName} ${lastName}`;
+                
+                // اختيار عشوائي بين الدينار العراقي والدولار الأمريكي
+                const useUSD = Math.random() > 0.7; // 30% فرصة أن يكون السحب بالدولار
+                let randomAmount;
+                
+                if (useUSD) {
+                    randomAmount = Math.floor(Math.random() * (settings.maxWithdrawUSD - settings.minWithdrawUSD + 1)) + settings.minWithdrawUSD;
+                } else {
+                    randomAmount = Math.floor(Math.random() * (settings.maxWithdrawIQD - settings.minWithdrawIQD + 1)) + settings.minWithdrawIQD;
+                }
+                
+                // وقت عشوائي في الماضي (من ثواني إلى أسابيع)
+                const randomTimeAgo = Math.floor(Math.random() * 14 * 24 * 60 * 60 * 1000); // حتى أسبوعين
+                const randomDate = new Date(now - randomTimeAgo);
+                
+                // طريقة سحب عشوائية
+                const methods = ['زين كاش', 'آسيا سيل', 'Qi Card', 'Binance'];
+                const randomMethod = methods[Math.floor(Math.random() * methods.length)];
+                
+                history.push({
+                    userName: fullName,
+                    userTelegram: `@user_${Math.floor(Math.random() * 10000)}`,
+                    amount: randomAmount,
+                    currency: useUSD ? 'USD' : 'IQD',
+                    method: randomMethod,
+                    date: randomDate.toISOString(),
+                    timeAgo: WITHDRAW_TIMES[Math.floor(Math.random() * WITHDRAW_TIMES.length)]
+                });
+            }
+            
+            // ترتيب من الأحدث إلى الأقدم
+            history.sort((a, b) => new Date(b.date) - new Date(a.date));
+            
+            localStorage.setItem('withdraw_history', JSON.stringify(history));
+            return history;
+        }
+
+        // إضافة معاملة للمستخدم
+        function addTransaction(userCode, transaction) {
+            const user = findUserByCode(userCode);
+            if (user) {
+                if (!user.transactions) user.transactions = [];
+                user.transactions.unshift(transaction);
+                updateUserData(userCode, { transactions: user.transactions });
+                return true;
+            }
+            return false;
+        }
+
+        // عرض معاملات المستخدم
+        function displayUserTransactions(userCode) {
+            const user = findUserByCode(userCode);
+            const transactionList = document.getElementById('transactionList');
+            const noTransactions = document.getElementById('noTransactions');
+            
+            if (!user || !user.transactions || user.transactions.length === 0) {
+                noTransactions.style.display = 'block';
+                transactionList.innerHTML = '';
+                return;
+            }
+            
+            noTransactions.style.display = 'none';
+            transactionList.innerHTML = '';
+            
+            user.transactions.slice(0, 10).forEach(transaction => {
+                const transactionItem = document.createElement('li');
+                transactionItem.className = 'transaction-item';
+                
+                const amountClass = transaction.type.includes('إضافة') || transaction.type.includes('أرباح') ? 'positive' : 'negative';
+                const sign = transaction.type.includes('إضافة') || transaction.type.includes('أرباح') ? '+' : '-';
+                
+                let amountDisplay = transaction.amount;
+                let currencyDisplay = transaction.currency;
+                
+                if (transaction.currency === 'IQD' || transaction.currency === 'دينار عراقي') {
+                    amountDisplay = transaction.amount;
+                    currencyDisplay = 'ألف دينار عراقي';
+                }
+                
+                transactionItem.innerHTML = `
+                    <div class="transaction-info">
+                        <h3>${transaction.type} ${transaction.method ? `- ${transaction.method}` : ''}</h3>
+                        <p>${transaction.date}</p>
+                        ${transaction.status ? `<p><small>الحالة: ${transaction.status}</small></p>` : ''}
+                    </div>
+                    <div class="transaction-amount ${amountClass}">
+                        ${sign} ${amountDisplay.toLocaleString()} ${currencyDisplay}
+                    </div>
+                `;
+                
+                transactionList.appendChild(transactionItem);
+            });
+        }
+
+        // التحقق من التصاعد التلقائي وتطبيقه
+        function checkAndApplyAutoIncrement(user) {
+            const now = Date.now();
+            let updated = false;
+            const updates = {};
+            
+            // التحقق من تصاعد الدينار
+            if (user.autoIncrementIQD && user.autoIncrementIQD.hours && user.autoIncrementIQD.amount) {
+                const hoursPassed = (now - (user.autoIncrementIQD.lastIncrement || now)) / (1000 * 60 * 60);
+                if (hoursPassed >= user.autoIncrementIQD.hours) {
+                    const increments = Math.floor(hoursPassed / user.autoIncrementIQD.hours);
+                    user.balanceIQD += increments * fromThousandsIQD(user.autoIncrementIQD.amount);
+                    updates.balanceIQD = user.balanceIQD;
+                    updates.autoIncrementIQD = { 
+                        ...user.autoIncrementIQD, 
+                        lastIncrement: now 
+                    };
+                    
+                    // إضافة معاملة
+                    addTransaction(user.userCode, {
+                        type: 'تصاعد تلقائي',
+                        amount: increments * user.autoIncrementIQD.amount,
+                        currency: 'ألف دينار عراقي',
+                        date: new Date().toLocaleString('ar-IQ'),
+                        note: `كل ${user.autoIncrementIQD.hours} ساعة`
+                    });
+                    
+                    updated = true;
+                }
+            }
+            
+            // التحقق من تصاعد الدولار
+            if (user.autoIncrementUSD && user.autoIncrementUSD.hours && user.autoIncrementUSD.amount) {
+                const hoursPassed = (now - (user.autoIncrementUSD.lastIncrement || now)) / (1000 * 60 * 60);
+                if (hoursPassed >= user.autoIncrementUSD.hours) {
+                    const increments = Math.floor(hoursPassed / user.autoIncrementUSD.hours);
+                    user.balanceUSD += increments * user.autoIncrementUSD.amount;
+                    updates.balanceUSD = user.balanceUSD;
+                    updates.autoIncrementUSD = { 
+                        ...user.autoIncrementUSD, 
+                        lastIncrement: now 
+                    };
+                    
+                    // إضافة معاملة
+                    addTransaction(user.userCode, {
+                        type: 'تصاعد تلقائي',
+                        amount: increments * user.autoIncrementUSD.amount,
+                        currency: 'دولار أمريكي',
+                        date: new Date().toLocaleString('ar-IQ'),
+                        note: `كل ${user.autoIncrementUSD.hours} ساعة`
+                    });
+                    
+                    updated = true;
+                }
+            }
+            
+            if (updated) {
+                updateUserData(user.userCode, updates);
+                return { ...user, ...updates };
+            }
+            
+            return user;
+        }
+
+        // تحديث معلومات التصاعد التلقائي
+        function updateAutoIncrementInfo(user) {
+            const autoIncrementText = document.getElementById('autoIncrementText');
+            
+            if (user.autoIncrementIQD && user.autoIncrementUSD) {
+                const text = `يتصاعد الرصيد تلقائياً: ${user.autoIncrementIQD.amount} ألف دينار كل ${user.autoIncrementIQD.hours} ساعة | ${user.autoIncrementUSD.amount} دولار كل ${user.autoIncrementUSD.hours} ساعة`;
+                autoIncrementText.textContent = text;
+            } else {
+                autoIncrementText.textContent = 'الرصيد يتصاعد تلقائياً';
+            }
+        }
+
+        // التحقق من التداول وتطبيقه
+        function checkAndApplyTrading(user) {
+            if (!user.tradingActive || !user.tradingStartTime) return user;
+            
+            const now = new Date();
+            const startTime = new Date(user.tradingStartTime);
+            const elapsedHours = (now - startTime) / (1000 * 60 * 60);
+            const tradingHours = user.tradingHours || 24;
+            
+            if (elapsedHours >= tradingHours) {
+                // إضافة الأرباح
+                const profit = user.tradingProfit || 1;
+                user.balanceIQD += fromThousandsIQD(profit);
+                user.tradingActive = false;
+                user.tradingAmount = 0;
+                user.tradingStartTime = '';
+                
+                updateUserData(user.userCode, {
+                    tradingActive: false,
+                    tradingAmount: 0,
+                    tradingStartTime: '',
+                    balanceIQD: user.balanceIQD
+                });
+                
+                // إضافة معاملة
+                addTransaction(user.userCode, {
+                    type: 'أرباح تداول',
+                    amount: profit,
+                    currency: 'ألف دينار عراقي',
+                    date: new Date().toLocaleString('ar-IQ'),
+                    note: `بعد ${tradingHours} ساعة`
+                });
+                
+                return user;
+            }
+            
+            return user;
+        }
+
+        // تحويل الثواني إلى تنسيق الوقت
+        function formatTime(seconds) {
+            const hours = Math.floor(seconds / 3600);
+            const minutes = Math.floor((seconds % 3600) / 60);
+            const secs = seconds % 60;
+            return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        // حساب الوقت المتبقي للتداول
+        function calculateTimeRemaining(user) {
+            if (!user.tradingActive || !user.tradingStartTime) return 0;
+            
+            const now = new Date();
+            const startTime = new Date(user.tradingStartTime);
+            const elapsedSeconds = (now - startTime) / 1000;
+            const totalSeconds = (user.tradingHours || 24) * 3600;
+            const remainingSeconds = Math.max(0, totalSeconds - elapsedSeconds);
+            
+            return Math.floor(remainingSeconds);
+        }
+
+        // عرض رسالة
+        function showAlert(message, type = 'info', containerId = 'adminAlert') {
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type}`;
+            alertDiv.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'danger' ? 'exclamation-circle' : type === 'warning' ? 'exclamation-triangle' : 'info-circle'}"></i>
+                ${message}
+            `;
+            
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            container.appendChild(alertDiv);
+            
+            setTimeout(() => {
+                alertDiv.remove();
+            }, 5000);
+        }
+
+        // عرض رسالة نجاح
+        function showSuccessMessage(message) {
+            const successAlert = document.createElement('div');
+            successAlert.className = 'alert alert-success';
+            successAlert.style.position = 'fixed';
+            successAlert.style.top = '20px';
+            successAlert.style.left = '50%';
+            successAlert.style.transform = 'translateX(-50%)';
+            successAlert.style.zIndex = '1001';
+            successAlert.style.width = '90%';
+            successAlert.style.maxWidth = '500px';
+            successAlert.innerHTML = `
+                <i class="fas fa-check-circle"></i>
+                ${message}
+            `;
+            
+            document.body.appendChild(successAlert);
+            
+            setTimeout(() => {
+                successAlert.remove();
+            }, 5000);
+        }
+
+        // عرض رسالة خطأ
+        function showErrorMessage(message) {
+            const errorAlert = document.createElement('div');
+            errorAlert.className = 'alert alert-danger';
+            errorAlert.style.position = 'fixed';
+            errorAlert.style.top = '20px';
+            errorAlert.style.left = '50%';
+            errorAlert.style.transform = 'translateX(-50%)';
+            errorAlert.style.zIndex = '1001';
+            errorAlert.style.width = '90%';
+            errorAlert.style.maxWidth = '500px';
+            errorAlert.innerHTML = `
+                <i class="fas fa-exclamation-circle"></i>
+                ${message}
+            `;
+            
+            document.body.appendChild(errorAlert);
+            
+            setTimeout(() => {
+                errorAlert.remove();
+            }, 5000);
+        }
+
+        // DOM Elements
+        const loginContainer = document.getElementById('loginContainer');
+        const mainApp = document.getElementById('mainApp');
+        const telegramUsername = document.getElementById('telegramUsername');
+        const fullName = document.getElementById('fullName');
+        const captchaInput = document.getElementById('captchaInput');
+        const loginBtn = document.getElementById('loginBtn');
+        const showAdminLoginBtn = document.getElementById('showAdminLoginBtn');
+        const adminLoginSection = document.getElementById('adminLoginSection');
+        const adminFullName = document.getElementById('adminFullName');
+        const adminCode = document.getElementById('adminCode');
+        const adminLoginBtn = document.getElementById('adminLoginBtn');
+        const userAvatar = document.getElementById('userAvatar');
+        const userFullName = document.getElementById('userFullName');
+        const userTelegram = document.getElementById('userTelegram');
+        const balanceIQD = document.getElementById('balanceIQD');
+        const balanceUSD = document.getElementById('balanceUSD');
+        const autoIncrementText = document.getElementById('autoIncrementText');
+        const homeLink = document.getElementById('homeLink');
+        const tradingLink = document.getElementById('tradingLink');
+        const withdrawUsersLink = document.getElementById('withdrawUsersLink');
+        const adminLink = document.getElementById('adminLink');
+        const logoutLink = document.getElementById('logoutLink');
+        const mainContent = document.getElementById('mainContent');
+        const tradingSection = document.getElementById('tradingSection');
+        const withdrawUsersSection = document.getElementById('withdrawUsersSection');
+        const adminSection = document.getElementById('adminSection');
+        const addFundsBtn = document.getElementById('addFundsBtn');
+        const withdrawBtn = document.getElementById('withdrawBtn');
+        const startTradingBtn = document.getElementById('startTradingBtn');
+        const tradingTime = document.getElementById('tradingTime');
+        const tradingProfit = document.getElementById('tradingProfit');
+        const tradingTimer = document.getElementById('tradingTimer');
+        const tradingInfo = document.getElementById('tradingInfo');
+        const profitAmount = document.getElementById('profitAmount');
+        const tradingInterval = document.getElementById('tradingInterval');
+        const tradingAmountInput = document.getElementById('tradingAmountInput');
+        const tradingAmountField = document.getElementById('tradingAmount');
+        const lastUpdated = document.getElementById('lastUpdated');
+        const withdrawUsersList = document.getElementById('withdrawUsersList');
+        const withdrawLimitsIQD = document.getElementById('withdrawLimitsIQD');
+        const withdrawLimitsUSD = document.getElementById('withdrawLimitsUSD');
+
+        // تحديث حدود السحب في الواجهة
+        function updateWithdrawLimitsDisplay() {
+            const settings = JSON.parse(localStorage.getItem('system_settings') || JSON.stringify(SYSTEM_SETTINGS));
+            if (withdrawLimitsIQD) {
+                withdrawLimitsIQD.textContent = `الحد الأدنى: ${settings.minWithdrawIQD} ألف دينار | الحد الأقصى: ${settings.maxWithdrawIQD} ألف دينار`;
+            }
+            if (withdrawLimitsUSD) {
+                withdrawLimitsUSD.textContent = `الحد الأدنى: ${settings.minWithdrawUSD} دولار | الحد الأقصى: ${settings.maxWithdrawUSD} دولار`;
+            }
+        }
+
+        // التحقق من إدخال البيانات
+        telegramUsername.addEventListener('input', checkLoginForm);
+        fullName.addEventListener('input', checkLoginForm);
+        captchaInput.addEventListener('input', checkLoginForm);
+
+        function checkLoginForm() {
+            const hasInput = telegramUsername.value && fullName.value && captchaInput.value;
+            loginBtn.disabled = !hasInput;
+        }
+
+        // تسجيل الدخول
+        loginBtn.addEventListener('click', () => {
+            const username = telegramUsername.value.trim();
+            const name = fullName.value.trim();
+            const code = captchaInput.value.trim().toUpperCase();
+            
+            // البحث عن مستخدم يتطابق مع جميع البيانات
+            const users = JSON.parse(localStorage.getItem('trading_users') || '[]');
+            let user = users.find(u => 
+                u.userCode === code && 
+                u.telegramUsername.toLowerCase() === username.toLowerCase() && 
+                u.fullName.toLowerCase() === name.toLowerCase()
+            );
+            
+            // التحقق إذا كان محاولة تسجيل دخول كمشرف
+            if (!user && name === ADMIN_INFO.name && code === ADMIN_INFO.adminCode) {
+                user = users.find(u => u.isAdmin && u.fullName === ADMIN_INFO.name);
+            }
+            
+            if (user) {
+                // التحقق من التصاعد التلقائي وتطبيقه
+                let updatedUser = checkAndApplyAutoIncrement(user);
+                
+                // التحقق من التداول وتطبيقه
+                updatedUser = checkAndApplyTrading(updatedUser);
+                
+                // تحديث واجهة المستخدم
+                userAvatar.textContent = name.charAt(0);
+                if (updatedUser.isAdmin) {
+                    userAvatar.classList.add('admin-avatar');
+                    userTelegram.textContent = "مشرف النظام";
+                    adminLink.style.display = 'block';
+                } else {
+                    userAvatar.classList.remove('admin-avatar');
+                    userTelegram.textContent = `@${username}`;
+                    adminLink.style.display = 'none';
+                }
+                userFullName.textContent = name;
+                
+                // تحديث الرصيد (عرض بالآلاف للدينار)
+                balanceIQD.textContent = `${formatIQD(updatedUser.balanceIQD)} <span class="balance-currency">ألف دينار عراقي</span>`;
+                balanceUSD.textContent = `${updatedUser.balanceUSD.toLocaleString()} <span class="balance-currency">دولار أمريكي</span>`;
+                
+                // تحديث معلومات التصاعد
+                updateAutoIncrementInfo(updatedUser);
+                
+                // تسجيل الدخول
+                loginContainer.style.display = 'none';
+                mainApp.style.display = 'block';
+                
+                // تخزين حالة المستخدم الحالي
+                localStorage.setItem('currentUser', JSON.stringify(updatedUser));
+                
+                // عرض معاملات المستخدم
+                displayUserTransactions(updatedUser.userCode);
+                
+                // تحديث حالة التداول
+                updateTradingDisplay(updatedUser);
+                
+                // تحديث حدود السحب
+                updateWithdrawLimitsDisplay();
+                
+                showSuccessMessage(`مرحباً بك ${name}! تم تسجيل الدخول بنجاح.`);
+            } else {
+                showErrorMessage("بيانات الدخول غير صحيحة! يرجى التأكد من اسم المستخدم والاسم والكود.");
+            }
+        });
+
+        // إظهار قسم تسجيل دخول المشرف
+        showAdminLoginBtn.addEventListener('click', function() {
+            adminLoginSection.style.display = 'block';
+            this.style.display = 'none';
+        });
+
+        // تسجيل دخول المشرف
+        adminLoginBtn.addEventListener('click', function() {
+            const adminName = adminFullName.value.trim();
+            const adminCodeInput = adminCode.value.trim();
+            
+            if (adminName === "ايهاب حسين كاظم" && adminCodeInput === "BFEYIO") {
+                // البحث عن مستخدم المشرف
+                const users = JSON.parse(localStorage.getItem('trading_users') || '[]');
+                let adminUser = users.find(u => u.isAdmin && u.fullName === adminName);
+                
+                if (adminUser) {
+                    // التحقق من التصاعد التلقائي وتطبيقه
+                    let updatedUser = checkAndApplyAutoIncrement(adminUser);
+                    
+                    // التحقق من التداول وتطبيقه
+                    updatedUser = checkAndApplyTrading(updatedUser);
+                    
+                    // تحديث واجهة المستخدم
+                    userAvatar.textContent = adminName.charAt(0);
+                    userAvatar.classList.add('admin-avatar');
+                    userTelegram.textContent = "مشرف النظام";
+                    adminLink.style.display = 'block';
+                    userFullName.textContent = adminName;
+                    
+                    // تحديث الرصيد
+                    balanceIQD.textContent = `${formatIQD(updatedUser.balanceIQD)} <span class="balance-currency">ألف دينار عراقي</span>`;
+                    balanceUSD.textContent = `${updatedUser.balanceUSD.toLocaleString()} <span class="balance-currency">دولار أمريكي</span>`;
+                    
+                    // تحديث معلومات التصاعد
+                    updateAutoIncrementInfo(updatedUser);
+                    
+                    // تسجيل الدخول
+                    loginContainer.style.display = 'none';
+                    mainApp.style.display = 'block';
+                    
+                    // تخزين حالة المستخدم الحالي
+                    localStorage.setItem('currentUser', JSON.stringify(updatedUser));
+                    
+                    // عرض معاملات المشرف
+                    displayUserTransactions(updatedUser.userCode);
+                    
+                    // تحديث حالة التداول
+                    updateTradingDisplay(updatedUser);
+                    
+                    // تحديث حدود السحب
+                    updateWithdrawLimitsDisplay();
+                    
+                    showSuccessMessage(`مرحباً بك ${adminName}! تم تسجيل الدخول بنجاح كمشرف.`);
+                } else {
+                    showErrorMessage("لم يتم العثور على حساب المشرف!");
+                }
+            } else {
+                showErrorMessage("بيانات المشرف غير صحيحة! يجب إدخال الاسم الثلاثي (المشرف) والكود (*****)");
+            }
+        });
+
+        // تسجيل الخروج
+        logoutLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            localStorage.removeItem('currentUser');
+            loginContainer.style.display = 'block';
+            mainApp.style.display = 'none';
+            
+            // إعادة تعيين النموذج
+            telegramUsername.value = '';
+            fullName.value = '';
+            captchaInput.value = '';
+            loginBtn.disabled = true;
+            
+            // إعادة تعيين نموذج المشرف
+            adminFullName.value = '';
+            adminCode.value = '';
+            adminLoginSection.style.display = 'none';
+            showAdminLoginBtn.style.display = 'block';
+        });
+
+        // التنقل بين الأقسام
+        homeLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            setActiveLink(homeLink);
+            mainContent.style.display = 'grid';
+            tradingSection.style.display = 'none';
+            withdrawUsersSection.style.display = 'none';
+            adminSection.style.display = 'none';
+            
+            // إيقاف تحديث قائمة المستخدمين الذين سحبوا
+            stopWithdrawUsersUpdate();
+        });
+
+        tradingLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            setActiveLink(tradingLink);
+            mainContent.style.display = 'none';
+            tradingSection.style.display = 'block';
+            withdrawUsersSection.style.display = 'none';
+            adminSection.style.display = 'none';
+            
+            // إيقاف تحديث قائمة المستخدمين الذين سحبوا
+            stopWithdrawUsersUpdate();
+            
+            // تحديث عرض التداول
+            const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+            updateTradingDisplay(currentUser);
+        });
+
+        withdrawUsersLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            setActiveLink(withdrawUsersLink);
+            mainContent.style.display = 'none';
+            tradingSection.style.display = 'none';
+            withdrawUsersSection.style.display = 'block';
+            adminSection.style.display = 'none';
+            
+            // بدء تحديث قائمة المستخدمين الذين سحبوا
+            startWithdrawUsersUpdate();
+        });
+
+        adminLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            setActiveLink(adminLink);
+            mainContent.style.display = 'none';
+            tradingSection.style.display = 'none';
+            withdrawUsersSection.style.display = 'none';
+            adminSection.style.display = 'block';
+            
+            // إيقاف تحديث قائمة المستخدمين الذين سحبوا
+            stopWithdrawUsersUpdate();
+            
+            // تحديث قائمة المستخدمين وطلبات السحب في لوحة المشرف
+            updateAdminUsersList();
+            updateWithdrawRequestsList();
+        });
+
+        function setActiveLink(activeLink) {
+            document.querySelectorAll('nav a').forEach(link => {
+                link.classList.remove('active');
+            });
+            activeLink.classList.add('active');
+        }
+
+        // تحديث عرض التداول
+        function updateTradingDisplay(user) {
+            if (!user) return;
+            
+            // تحديث الوقت المتبقي
+            if (user.tradingActive) {
+                const timeRemaining = calculateTimeRemaining(user);
+                if (timeRemaining > 0) {
+                    tradingTime.textContent = formatTime(timeRemaining);
+                    tradingTimer.textContent = formatTime(timeRemaining);
+                    startTradingBtn.disabled = true;
+                    startTradingBtn.innerHTML = '<i class="fas fa-sync-alt"></i> جاري التداول...';
+                    tradingAmountInput.style.display = 'none';
+                } else {
+                    // إعادة تحميل المستخدم
+                    const updatedUser = checkAndApplyTrading(user);
+                    if (updatedUser !== user) {
+                        localStorage.setItem('currentUser', JSON.stringify(updatedUser));
+                        updateTradingDisplay(updatedUser);
+                        return;
+                    }
+                }
+            } else {
+                tradingTime.textContent = user.tradingHours ? `${user.tradingHours}:00:00` : '24:00:00';
+                tradingTimer.textContent = user.tradingHours ? `${user.tradingHours}:00:00` : '24:00:00';
+                startTradingBtn.disabled = false;
+                startTradingBtn.innerHTML = '<i class="fas fa-play"></i> بدء التداول';
+                tradingAmountInput.style.display = 'block';
+            }
+            
+            // تحديث معلومات التداول
+            if (user.tradingHours) {
+                tradingInterval.textContent = user.tradingHours;
+            }
+            
+            if (user.tradingProfit) {
+                profitAmount.textContent = user.tradingProfit;
+            }
+            
+            // تعيين الحد الأقصى للمبلغ المدخل
+            const maxAmount = Math.floor(toThousandsIQD(user.balanceIQD));
+            tradingAmountField.max = maxAmount;
+            tradingAmountField.placeholder = `الحد الأقصى: ${maxAmount} الف عراقي `;
+        }
+
+        // بدء التداول
+        startTradingBtn.addEventListener('click', () => {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+            const amount = parseInt(tradingAmountField.value);
+            
+            if (!amount || amount <= 0) {
+                showErrorMessage("يرجى إدخال مبلغ صحيح للتداول!");
+                return;
+            }
+            
+            const amountInDinar = fromThousandsIQD(amount);
+            
+            if (currentUser.balanceIQD < amountInDinar) {
+                showErrorMessage("رصيدك غير كافي لبدء التداول بهذا المبلغ!");
+                return;
+            }
+            
+            if (currentUser.tradingActive) {
+                showErrorMessage("لديك تداول نشط بالفعل!");
+                return;
+            }
+            
+            currentUser.tradingActive = true;
+            currentUser.tradingAmount = amount;
+            currentUser.tradingStartTime = new Date().toISOString();
+            
+            // خصم مبلغ التداول
+            currentUser.balanceIQD -= amountInDinar;
+            
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            
+            // تحديث بيانات المستخدم
+            updateUserData(currentUser.userCode, {
+                tradingActive: true,
+                tradingAmount: amount,
+                tradingStartTime: currentUser.tradingStartTime,
+                balanceIQD: currentUser.balanceIQD
+            });
+            
+            // إضافة معاملة
+            addTransaction(currentUser.userCode, {
+                type: 'بدء تداول',
+                amount: amount,
+                currency: 'ألف دينار عراقي',
+                date: new Date().toLocaleString('ar-IQ'),
+                note: 'مبلغ التداول'
+            });
+            
+            startTradingBtn.disabled = true;
+            startTradingBtn.innerHTML = '<i class="fas fa-sync-alt"></i> جاري التداول...';
+            tradingAmountInput.style.display = 'none';
+            
+            // تحديث الرصيد
+            balanceIQD.textContent = `${formatIQD(currentUser.balanceIQD)} <span class="balance-currency">ألف دينار عراقي</span>`;
+            
+            // عرض المعاملات
+            displayUserTransactions(currentUser.userCode);
+            
+            showSuccessMessage(`لقد تم بدء التداول بنجاح بمبلغ ${amount} ألف دينار! ستظهر الأرباح بعد ${currentUser.tradingHours || 24} ساعة.`);
+        });
+
+        // إضافة أموال
+        addFundsBtn.addEventListener('click', () => {
+            document.getElementById('addFundsModal').style.display = 'flex';
+        });
+
+        // سحب أموال
+        withdrawBtn.addEventListener('click', () => {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+            const settings = JSON.parse(localStorage.getItem('system_settings') || JSON.stringify(SYSTEM_SETTINGS));
+            
+            if (toThousandsIQD(currentUser.balanceIQD) < settings.minWithdrawIQD && currentUser.balanceUSD < settings.minWithdrawUSD) {
+                showErrorMessage("لا يوجد رصيد كافٍ لسحبه!");
+                return;
+            }
+            
+            document.getElementById('withdrawModal').style.display = 'flex';
+            resetWithdrawForm();
+        });
+
+        // إغلاق النوافذ
+        document.querySelectorAll('.close-modal').forEach(button => {
+            button.addEventListener('click', () => {
+                document.querySelectorAll('.modal').forEach(modal => {
+                    modal.style.display = 'none';
+                });
+            });
+        });
+
+        // تبديل طرق السحب
+        function switchPaymentMethod(activeMethod) {
+            // إخفاء جميع النماذج
+            document.getElementById('zainCashForm').style.display = 'none';
+            document.getElementById('asiaCellForm').style.display = 'none';
+            document.getElementById('qiCardForm').style.display = 'none';
+            document.getElementById('binanceForm').style.display = 'none';
+            
+            // إزالة النشاط من جميع الطرق
+            document.getElementById('zainCashMethod').classList.remove('active');
+            document.getElementById('asiaCellMethod').classList.remove('active');
+            document.getElementById('qiCardMethod').classList.remove('active');
+            document.getElementById('binanceMethod').classList.remove('active');
+            
+            // تفعيل الطريقة المختارة
+            activeMethod.classList.add('active');
+            
+            // إظهار النموذج المناسب
+            if (activeMethod.id === 'zainCashMethod') {
+                document.getElementById('zainCashForm').style.display = 'block';
+            } else if (activeMethod.id === 'asiaCellMethod') {
+                document.getElementById('asiaCellForm').style.display = 'block';
+            } else if (activeMethod.id === 'qiCardMethod') {
+                document.getElementById('qiCardForm').style.display = 'block';
+            } else if (activeMethod.id === 'binanceMethod') {
+                document.getElementById('binanceForm').style.display = 'block';
+            }
+        }
+
+        // إضافة أحداث لطرق السحب
+        document.getElementById('zainCashMethod').addEventListener('click', () => switchPaymentMethod(zainCashMethod));
+        document.getElementById('asiaCellMethod').addEventListener('click', () => switchPaymentMethod(asiaCellMethod));
+        document.getElementById('qiCardMethod').addEventListener('click', () => switchPaymentMethod(qiCardMethod));
+        document.getElementById('binanceMethod').addEventListener('click', () => switchPaymentMethod(binanceMethod));
+
+        // معالجة رفع صورة الباركود
+        document.getElementById('barcodeUpload').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                document.getElementById('barcodeFileName').textContent = file.name;
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('barcodePreview').src = e.target.result;
+                    document.getElementById('barcodePreview').style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // تأكيد عملية السحب
+        document.getElementById('confirmWithdraw').addEventListener('click', () => {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+            const settings = JSON.parse(localStorage.getItem('system_settings') || JSON.stringify(SYSTEM_SETTINGS));
+            let withdrawData = {};
+            let isValid = true;
+            let errorMessage = '';
+            
+            // تحديد طريقة السحب
+            if (document.getElementById('zainCashMethod').classList.contains('active')) {
+                const phone = document.getElementById('zainCashNumber').value.trim();
+                const amount = parseInt(document.getElementById('withdrawAmountIQD').value);
+                const file = document.getElementById('barcodeUpload').files[0];
+                
+                if (!phone || phone.length < 10) {
+                    isValid = false;
+                    errorMessage = 'يرجى إدخال رقم زين كاش صحيح';
+                } else if (!amount || amount < settings.minWithdrawIQD || amount > settings.maxWithdrawIQD) {
+                    isValid = false;
+                    errorMessage = `المبلغ يجب أن يكون بين ${settings.minWithdrawIQD} و ${settings.maxWithdrawIQD} ألف دينار`;
+                } else if (!file) {
+                    isValid = false;
+                    errorMessage = 'يرجى رفع صورة الباركود';
+                } else if (toThousandsIQD(currentUser.balanceIQD) < amount) {
+                    isValid = false;
+                    errorMessage = 'رصيدك غير كافي لسحب هذا المبلغ';
+                } else {
+                    withdrawData = {
+                        method: 'زين كاش',
+                        userCode: currentUser.userCode,
+                        userName: currentUser.fullName,
+                        userTelegram: currentUser.telegramUsername,
+                        phone: phone,
+                        amount: amount,
+                        currency: 'IQD',
+                        barcode: file.name
+                    };
+                }
+            } 
+            else if (document.getElementById('asiaCellMethod').classList.contains('active')) {
+                const phone = document.getElementById('asiaCellNumber').value.trim();
+                const amount = parseInt(document.getElementById('asiaWithdrawAmountIQD').value);
+                
+                if (!phone || phone.length < 10) {
+                    isValid = false;
+                    errorMessage = 'يرجى إدخال رقم آسيا سيل صحيح';
+                } else if (!amount || amount < settings.minWithdrawIQD || amount > settings.maxWithdrawIQD) {
+                    isValid = false;
+                    errorMessage = `المبلغ يجب أن يكون بين ${settings.minWithdrawIQD} و ${settings.maxWithdrawIQD} ألف دينار`;
+                } else if (toThousandsIQD(currentUser.balanceIQD) < amount) {
+                    isValid = false;
+                    errorMessage = 'رصيدك غير كافي لسحب هذا المبلغ';
+                } else {
+                    withdrawData = {
+                        method: 'آسيا سيل',
+                        userCode: currentUser.userCode,
+                        userName: currentUser.fullName,
+                        userTelegram: currentUser.telegramUsername,
+                        phone: phone,
+                        amount: amount,
+                        currency: 'IQD'
+                    };
+                }
+            }
+            else if (document.getElementById('qiCardMethod').classList.contains('active')) {
+                const cardNumber = document.getElementById('qiCardNumber').value.trim();
+                const cardName = document.getElementById('qiCardName').value.trim();
+                const amount = parseInt(document.getElementById('qiCardAmountIQD').value);
+                
+                if (!cardNumber) {
+                    isValid = false;
+                    errorMessage = 'يرجى إدخال رقم البطاقة';
+                } else if (!cardName) {
+                    isValid = false;
+                    errorMessage = 'يرجى إدخال اسم صاحب البطاقة';
+                } else if (!amount || amount < settings.minWithdrawIQD || amount > settings.maxWithdrawIQD) {
+                    isValid = false;
+                    errorMessage = `المبلغ يجب أن يكون بين ${settings.minWithdrawIQD} و ${settings.maxWithdrawIQD} ألف دينار`;
+                } else if (toThousandsIQD(currentUser.balanceIQD) < amount) {
+                    isValid = false;
+                    errorMessage = 'رصيدك غير كافي لسحب هذا المبلغ';
+                } else {
+                    withdrawData = {
+                        method: 'Qi Card',
+                        userCode: currentUser.userCode,
+                        userName: currentUser.fullName,
+                        userTelegram: currentUser.telegramUsername,
+                        cardNumber: cardNumber,
+                        cardName: cardName,
+                        amount: amount,
+                        currency: 'IQD'
+                    };
+                }
+            }
+            else if (document.getElementById('binanceMethod').classList.contains('active')) {
+                const binanceId = document.getElementById('binanceId').value.trim();
+                const binanceName = document.getElementById('binanceName').value.trim();
+                const amount = parseInt(document.getElementById('binanceAmountUSD').value);
+                
+                if (!binanceId) {
+                    isValid = false;
+                    errorMessage = 'يرجى إدخال معرف Binance';
+                } else if (!binanceName) {
+                    isValid = false;
+                    errorMessage = 'يرجى إدخال اسم صاحب الحساب';
+                } else if (!amount || amount < settings.minWithdrawUSD || amount > settings.maxWithdrawUSD) {
+                    isValid = false;
+                    errorMessage = `المبلغ يجب أن يكون بين ${settings.minWithdrawUSD} و ${settings.maxWithdrawUSD} دولار`;
+                } else if (currentUser.balanceUSD < amount) {
+                    isValid = false;
+                    errorMessage = 'رصيدك غير كافي لسحب هذا المبلغ';
+                } else {
+                    withdrawData = {
+                        method: 'Binance',
+                        userCode: currentUser.userCode,
+                        userName: currentUser.fullName,
+                        userTelegram: currentUser.telegramUsername,
+                        binanceId: binanceId,
+                        binanceName: binanceName,
+                        amount: amount,
+                        currency: 'USD'
+                    };
+                }
+            }
+            
+            if (!isValid) {
+                showAlert(errorMessage, 'danger', 'withdrawAlert');
+                return;
+            }
+            
+            // إضافة طلب السحب
+            const requestId = addWithdrawRequest(withdrawData);
+            
+            // إغلاق النافذة
+            document.getElementById('withdrawModal').style.display = 'none';
+            
+            // عرض رسالة نجاح
+            showSuccessMessage('تم تقديم طلب السحب بنجاح! انتظر موافقة نضام السحب تلقائي.');
+            
+            // إعادة تعيين النموذج
+            resetWithdrawForm();
+        });
+
+        // إعادة تعيين نموذج السحب
+        function resetWithdrawForm() {
+            document.getElementById('zainCashForm').style.display = 'block';
+            document.getElementById('asiaCellForm').style.display = 'none';
+            document.getElementById('qiCardForm').style.display = 'none';
+            document.getElementById('binanceForm').style.display = 'none';
+            
+            document.getElementById('zainCashMethod').classList.add('active');
+            document.getElementById('asiaCellMethod').classList.remove('active');
+            document.getElementById('qiCardMethod').classList.remove('active');
+            document.getElementById('binanceMethod').classList.remove('active');
+            
+            // إعادة تعيين الحقول
+            document.getElementById('zainCashNumber').value = '';
+            document.getElementById('withdrawAmountIQD').value = '';
+            document.getElementById('asiaCellNumber').value = '';
+            document.getElementById('asiaWithdrawAmountIQD').value = '';
+            document.getElementById('qiCardNumber').value = '';
+            document.getElementById('qiCardName').value = '';
+            document.getElementById('qiCardAmountIQD').value = '';
+            document.getElementById('binanceId').value = '';
+            document.getElementById('binanceName').value = '';
+            document.getElementById('binanceAmountUSD').value = '';
+            
+            // إعادة تعيين رفع الصورة
+            document.getElementById('barcodeUpload').value = '';
+            document.getElementById('barcodeFileName').textContent = '';
+            document.getElementById('barcodePreview').style.display = 'none';
+            document.getElementById('barcodePreview').src = '';
+            
+            // إعادة تعيين التنبيه
+            document.getElementById('withdrawAlert').innerHTML = '';
+        }
+
+        // تحديث قائمة المستخدمين في لوحة المشرف
+        function updateAdminUsersList() {
+            const users = getAllUsers();
+            const adminUsersList = document.getElementById('adminUsersList');
+            const searchTerm = document.getElementById('adminSearchUser').value.toLowerCase();
+            
+            adminUsersList.innerHTML = '';
+            
+            users.forEach(user => {
+                if (searchTerm && !user.fullName.toLowerCase().includes(searchTerm) && 
+                    !user.userCode.toLowerCase().includes(searchTerm) &&
+                    !user.telegramUsername.toLowerCase().includes(searchTerm)) {
+                    return;
+                }
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${user.telegramUsername}</td>
+                    <td>${user.fullName}</td>
+                    <td><span style="font-family: monospace; background: rgba(0,0,0,0.3); padding: 5px 10px; border-radius: 5px; border: 1px solid var(--accent);">${user.userCode}</span></td>
+                    <td>${formatIQD(user.balanceIQD)} ألف د.ع</td>
+                    <td>${user.balanceUSD.toLocaleString()} $</td>
+                    <td>${new Date(user.createdAt).toLocaleDateString('ar-IQ')}</td>
+                    <td>
+                        <button class="btn btn-sm btn-success" onclick="adminAddBalance('${user.userCode}')" style="margin-bottom: 5px;">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                        <button class="btn btn-sm btn-danger" onclick="adminDeductBalance('${user.userCode}')">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                    </td>
+                `;
+                adminUsersList.appendChild(row);
+            });
+        }
+
+        // تحديث قائمة طلبات السحب في لوحة المشرف
+        function updateWithdrawRequestsList() {
+            const requests = getAllWithdrawRequests();
+            const withdrawRequestsList = document.getElementById('withdrawRequestsList');
+            const searchTerm = document.getElementById('adminSearchWithdraw').value.toLowerCase();
+            
+            withdrawRequestsList.innerHTML = '';
+            
+            requests.forEach(request => {
+                if (searchTerm && !request.userName.toLowerCase().includes(searchTerm) && 
+                    !request.userCode.toLowerCase().includes(searchTerm) &&
+                    !request.method.toLowerCase().includes(searchTerm)) {
+                    return;
+                }
+                
+                const statusClass = request.status === 'pending' ? 'status-pending' : 
+                                   request.status === 'approved' ? 'status-approved' : 'status-rejected';
+                const statusText = request.status === 'pending' ? 'معلق' : 
+                                  request.status === 'approved' ? 'مقبول' : 'مرفوض';
+                
+                const amountDisplay = request.currency === 'IQD' ? 
+                    `${request.amount} ألف دينار` : 
+                    `${request.amount} دولار`;
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>
+                        <div>${request.userName}</div>
+                        <small>${request.userTelegram}</small>
+                    </td>
+                    <td>${request.method}</td>
+                    <td>${amountDisplay}</td>
+                    <td>
+                        ${request.phone ? `<div>رقم: ${request.phone}</div>` : ''}
+                        ${request.cardNumber ? `<div>بطاقة: ${request.cardNumber}</div>` : ''}
+                        ${request.binanceId ? `<div>معرف: ${request.binanceId}</div>` : ''}
+                        ${request.barcode ? `<div>باركود: ${request.barcode}</div>` : ''}
+                    </td>
+                    <td><span class="${statusClass}">${statusText}</span></td>
+                    <td>${new Date(request.createdAt).toLocaleString('ar-IQ')}</td>
+                    <td>
+                        ${request.status === 'pending' ? `
+                            <button class="btn btn-sm btn-success" onclick="approveWithdrawRequest('${request.id}')" style="margin-bottom: 5px;">
+                                <i class="fas fa-check"></i> قبول
+                            </button>
+                            <button class="btn btn-sm btn-danger" onclick="rejectWithdrawRequest('${request.id}')">
+                                <i class="fas fa-times"></i> رفض
+                            </button>
+                        ` : `
+                            <span>تم ${request.status === 'approved' ? 'القبول' : 'الرفض'}</span>
+                        `}
+                    </td>
+                `;
+                withdrawRequestsList.appendChild(row);
+            });
+        }
+
+        // البحث عن المستخدمين
+        document.getElementById('adminSearchUser').addEventListener('input', updateAdminUsersList);
+        document.getElementById('adminSearchWithdraw').addEventListener('input', updateWithdrawRequestsList);
+
+        // إضافة رصيد للمستخدم (من لوحة المشرف)
+        window.adminAddBalance = function(userCode) {
+            const amountIQD = prompt(`أدخل المبلغ المراد إضافته للمستخدم ${userCode} (ألف دينار عراقي):`);
+            const amountUSD = prompt(`أدخل المبلغ المراد إضافته للمستخدم ${userCode} (دولار أمريكي):`);
+            
+            if ((amountIQD && !isNaN(amountIQD) && amountIQD > 0) || 
+                (amountUSD && !isNaN(amountUSD) && amountUSD > 0)) {
+                const user = findUserByCode(userCode);
+                if (user) {
+                    const updates = {};
+                    
+                    if (amountIQD && amountIQD > 0) {
+                        user.balanceIQD += fromThousandsIQD(parseInt(amountIQD));
+                        updates.balanceIQD = user.balanceIQD;
+                        
+                        // إضافة معاملة
+                        addTransaction(userCode, {
+                            type: 'إضافة رصيد',
+                            amount: parseInt(amountIQD),
+                            currency: 'ألف دينار عراقي',
+                            date: new Date().toLocaleString('ar-IQ'),
+                            by: 'المشرف'
+                        });
+                    }
+                    
+                    if (amountUSD && amountUSD > 0) {
+                        user.balanceUSD += parseInt(amountUSD);
+                        updates.balanceUSD = user.balanceUSD;
+                        
+                        // إضافة معاملة
+                        addTransaction(userCode, {
+                            type: 'إضافة رصيد',
+                            amount: parseInt(amountUSD),
+                            currency: 'دولار أمريكي',
+                            date: new Date().toLocaleString('ar-IQ'),
+                            by: 'المشرف'
+                        });
+                    }
+                    
+                    updateUserData(userCode, updates);
+                    updateAdminUsersList();
+                    showAlert(`تم إضافة الرصيد بنجاح للمستخدم ${user.fullName}`, 'success');
+                    
+                    // إذا كان المستخدم مسجل دخول حالياً، تحديث الرصيد والمعاملات
+                    const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+                    if (currentUser.userCode === userCode) {
+                        currentUser.balanceIQD = user.balanceIQD;
+                        currentUser.balanceUSD = user.balanceUSD;
+                        currentUser.transactions = user.transactions;
+                        localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                        balanceIQD.textContent = `${formatIQD(user.balanceIQD)} <span class="balance-currency">ألف دينار عراقي</span>`;
+                        balanceUSD.textContent = `${user.balanceUSD.toLocaleString()} <span class="balance-currency">دولار أمريكي</span>`;
+                        displayUserTransactions(userCode);
+                    }
+                }
+            }
+        };
+
+        // خصم رصيد من المستخدم (من لوحة المشرف)
+        window.adminDeductBalance = function(userCode) {
+            const amountIQD = prompt(`أدخل المبلغ المراد خصمه من المستخدم ${userCode} (ألف دينار عراقي):`);
+            const amountUSD = prompt(`أدخل المبلغ المراد خصمه من المستخدم ${userCode} (دولار أمريكي):`);
+            
+            if ((amountIQD && !isNaN(amountIQD) && amountIQD > 0) || 
+                (amountUSD && !isNaN(amountUSD) && amountUSD > 0)) {
+                const user = findUserByCode(userCode);
+                if (user) {
+                    const updates = {};
+                    
+                    if (amountIQD && amountIQD > 0) {
+                        const amountInDinar = fromThousandsIQD(parseInt(amountIQD));
+                        if (user.balanceIQD >= amountInDinar) {
+                            user.balanceIQD -= amountInDinar;
+                            updates.balanceIQD = user.balanceIQD;
+                            
+                            // إضافة معاملة
+                            addTransaction(userCode, {
+                                type: 'خصم رصيد',
+                                amount: parseInt(amountIQD),
+                                currency: 'ألف دينار عراقي',
+                                date: new Date().toLocaleString('ar-IQ'),
+                                by: 'المشرف'
+                            });
+                        } else {
+                            showAlert('رصيد الدينار العراقي غير كافي للخصم', 'danger');
+                            return;
+                        }
+                    }
+                    
+                    if (amountUSD && amountUSD > 0) {
+                        if (user.balanceUSD >= amountUSD) {
+                            user.balanceUSD -= parseInt(amountUSD);
+                            updates.balanceUSD = user.balanceUSD;
+                            
+                            // إضافة معاملة
+                            addTransaction(userCode, {
+                                type: 'خصم رصيد',
+                                amount: parseInt(amountUSD),
+                                currency: 'دولار أمريكي',
+                                date: new Date().toLocaleString('ar-IQ'),
+                                by: 'المشرف'
+                            });
+                        } else {
+                            showAlert('رصيد الدولار الأمريكي غير كافي للخصم', 'danger');
+                            return;
+                        }
+                    }
+                    
+                    updateUserData(userCode, updates);
+                    updateAdminUsersList();
+                    showAlert(`تم خصم الرصيد بنجاح من المستخدم ${user.fullName}`, 'success');
+                    
+                    // إذا كان المستخدم مسجل دخول حالياً، تحديث الرصيد والمعاملات
+                    const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+                    if (currentUser.userCode === userCode) {
+                        currentUser.balanceIQD = user.balanceIQD;
+                        currentUser.balanceUSD = user.balanceUSD;
+                        currentUser.transactions = user.transactions;
+                        localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                        balanceIQD.textContent = `${formatIQD(user.balanceIQD)} <span class="balance-currency">الف دينار عراقي</span>`;
+                        balanceUSD.textContent = `${user.balanceUSD.toLocaleString()} <span class="balance-currency">دولار أمريكي</span>`;
+                        displayUserTransactions(userCode);
+                    }
+                }
+            }
+        };
+
+        // قبول طلب السحب
+        window.approveWithdrawRequest = function(requestId) {
+            const note = prompt("أدخل ملاحظة (اختياري):");
+            if (updateWithdrawRequestStatus(requestId, 'approved', note)) {
+                updateWithdrawRequestsList();
+                showAlert('تم قبول طلب السحب بنجاح', 'success');
+            }
+        };
+
+        // رفض طلب السحب
+        window.rejectWithdrawRequest = function(requestId) {
+            const note = prompt("أدخل سبب الرفض:");
+            if (updateWithdrawRequestStatus(requestId, 'rejected', note)) {
+                updateWithdrawRequestsList();
+                showAlert('تم رفض طلب السحب', 'warning');
+            }
+        };
+
+        // إضافة رصيد (من النموذج)
+        document.getElementById('adminAddBalanceBtn').addEventListener('click', () => {
+            const userCode = document.getElementById('adminUserCode').value.trim();
+            
+            if (!userCode) {
+                showAlert('يرجى إدخال كود المستخدم', 'danger');
+                return;
+            }
+            
+            adminAddBalance(userCode);
+            document.getElementById('adminUserCode').value = '';
+            document.getElementById('adminAddAmountIQD').value = '';
+            document.getElementById('adminAddAmountUSD').value = '';
+        });
+
+        // خصم رصيد (من النموذج)
+        document.getElementById('adminDeductBalanceBtn').addEventListener('click', () => {
+            const userCode = document.getElementById('adminUserCodeDeduct').value.trim();
+            
+            if (!userCode) {
+                showAlert('يرجى إدخال كود المستخدم', 'danger');
+                return;
+            }
+            
+            adminDeductBalance(userCode);
+            document.getElementById('adminUserCodeDeduct').value = '';
+            document.getElementById('adminDeductAmountIQD').value = '';
+            document.getElementById('adminDeductAmountUSD').value = '';
+        });
+
+        // إنشاء مستخدم جديد
+        document.getElementById('adminCreateUserBtn').addEventListener('click', () => {
+            const telegramUsername = document.getElementById('newUserTelegram').value.trim();
+            const fullName = document.getElementById('newUserName').value.trim();
+            const userCode = document.getElementById('newUserCode').value.trim().toUpperCase();
+            
+            if (!telegramUsername || !fullName || !userCode) {
+                showAlert('يرجى تعبئة جميع الحقول', 'danger');
+                return;
+            }
+            
+            if (userCode.length !== 6) {
+                showAlert('الكود يجب أن يكون مكون من 6 أحرف', 'danger');
+                return;
+            }
+            
+            // التحقق من عدم وجود مستخدم بنفس الكود
+            const existingUserByCode = findUserByCode(userCode);
+            if (existingUserByCode) {
+                showAlert('الكود موجود بالفعل، يرجى اختيار كود آخر', 'danger');
+                return;
+            }
+            
+            // التحقق من عدم وجود مستخدم بنفس اسم المستخدم
+            const existingUserByUsername = findUserByUsername(telegramUsername);
+            if (existingUserByUsername) {
+                showAlert('اسم المستخدم موجود بالفعل', 'danger');
+                return;
+            }
+            
+            const newUser = {
+                telegramUsername: telegramUsername,
+                fullName: fullName,
+                userCode: userCode,
+                balanceIQD: 0,
+                balanceUSD: 0,
+                isAdmin: false,
+                transactions: [],
+                tradingActive: false,
+                tradingAmount: 0,
+                tradingStartTime: '',
+                tradingHours: 24,
+                tradingProfit: 1,
+                autoIncrementIQD: { hours: 24, amount: 1, lastIncrement: Date.now() },
+                autoIncrementUSD: { hours: 24, amount: 8, lastIncrement: Date.now() },
+                createdAt: new Date().toISOString()
+            };
+            
+            // حفظ المستخدم الجديد
+            const users = JSON.parse(localStorage.getItem('trading_users') || '[]');
+            users.push(newUser);
+            localStorage.setItem('trading_users', JSON.stringify(users));
+            
+            showAlert(`تم إنشاء مستخدم جديد بنجاح! الكود: ${userCode}`, 'success');
+            updateAdminUsersList();
+            
+            // إعادة تعيين الحقول
+            document.getElementById('newUserTelegram').value = '';
+            document.getElementById('newUserName').value = '';
+            document.getElementById('newUserCode').value = '';
+        });
+
+        // تعيين التصاعد التلقائي
+        document.getElementById('adminSetAutoIncrementBtn').addEventListener('click', () => {
+            const userCode = document.getElementById('autoIncrementUserCode').value.trim();
+            const hoursIQD = parseInt(document.getElementById('autoIncrementHoursIQD').value);
+            const amountIQD = parseInt(document.getElementById('autoIncrementAmountIQD').value);
+            const hoursUSD = parseInt(document.getElementById('autoIncrementHoursUSD').value);
+            const amountUSD = parseInt(document.getElementById('autoIncrementAmountUSD').value);
+            
+            if (!userCode) {
+                showAlert('يرجى إدخال كود المستخدم', 'danger');
+                return;
+            }
+            
+            if ((!hoursIQD || hoursIQD <= 0) && (!hoursUSD || hoursUSD <= 0)) {
+                showAlert('يرجى إدخال عدد ساعات صحيح', 'danger');
+                return;
+            }
+            
+            if ((!amountIQD || amountIQD <= 0) && (!amountUSD || amountUSD <= 0)) {
+                showAlert('يرجى إدخال مبلغ صحيح', 'danger');
+                return;
+            }
+            
+            const user = findUserByCode(userCode);
+            if (!user) {
+                showAlert('لم يتم العثور على المستخدم', 'danger');
+                return;
+            }
+            
+            const updates = {};
+            
+            if (hoursIQD > 0 && amountIQD > 0) {
+                updates.autoIncrementIQD = {
+                    hours: hoursIQD,
+                    amount: amountIQD,
+                    lastIncrement: Date.now()
+                };
+            }
+            
+            if (hoursUSD > 0 && amountUSD > 0) {
+                updates.autoIncrementUSD = {
+                    hours: hoursUSD,
+                    amount: amountUSD,
+                    lastIncrement: Date.now()
+                };
+            }
+            
+            updateUserData(userCode, updates);
+            showAlert(`تم تعيين التصاعد التلقائي بنجاح للمستخدم ${user.fullName}`, 'success');
+            
+            // إذا كان المستخدم مسجل دخول حالياً، تحديث المعلومات
+            const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+            if (currentUser.userCode === userCode) {
+                currentUser.autoIncrementIQD = updates.autoIncrementIQD || currentUser.autoIncrementIQD;
+                currentUser.autoIncrementUSD = updates.autoIncrementUSD || currentUser.autoIncrementUSD;
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                updateAutoIncrementInfo(currentUser);
+            }
+            
+            // إعادة تعيين الحقول
+            document.getElementById('autoIncrementUserCode').value = '';
+        });
+
+        // تعيين الوقت التصاعدي للتداول
+        document.getElementById('adminSetTradingTimeBtn').addEventListener('click', () => {
+            const userCode = document.getElementById('tradingTimeUserCode').value.trim();
+            const tradingHours = parseInt(document.getElementById('tradingTimeHours').value);
+            const tradingProfit = parseInt(document.getElementById('tradingTimeProfit').value);
+            
+            if (!userCode) {
+                showAlert('يرجى إدخال كود المستخدم', 'danger');
+                return;
+            }
+            
+            if (!tradingHours || tradingHours <= 0) {
+                showAlert('يرجى إدخال عدد ساعات صحيح', 'danger');
+                return;
+            }
+            
+            if (!tradingProfit || tradingProfit <= 0) {
+                showAlert('يرجى إدخال مبلغ ربح صحيح', 'danger');
+                return;
+            }
+            
+            const user = findUserByCode(userCode);
+            if (!user) {
+                showAlert('لم يتم العثور على المستخدم', 'danger');
+                return;
+            }
+            
+            const updates = {
+                tradingHours: tradingHours,
+                tradingProfit: tradingProfit
+            };
+            
+            updateUserData(userCode, updates);
+            showAlert(`تم تعيين إعدادات التداول بنجاح للمستخدم ${user.fullName}`, 'success');
+            
+            // إذا كان المستخدم مسجل دخول حالياً، تحديث المعلومات
+            const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+            if (currentUser.userCode === userCode) {
+                currentUser.tradingHours = tradingHours;
+                currentUser.tradingProfit = tradingProfit;
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                updateTradingDisplay(currentUser);
+            }
+            
+            // إعادة تعيين الحقول
+            document.getElementById('tradingTimeUserCode').value = '';
+        });
+
+        // تعيين حدود السحب
+        document.getElementById('adminSetWithdrawLimitsBtn').addEventListener('click', () => {
+            const minWithdrawIQD = parseInt(document.getElementById('minWithdrawIQD').value);
+            const maxWithdrawIQD = parseInt(document.getElementById('maxWithdrawIQD').value);
+            const minWithdrawUSD = parseInt(document.getElementById('minWithdrawUSD').value);
+            const maxWithdrawUSD = parseInt(document.getElementById('maxWithdrawUSD').value);
+            
+            if (!minWithdrawIQD || minWithdrawIQD <= 0 || !maxWithdrawIQD || maxWithdrawIQD <= 0) {
+                showAlert('يرجى إدخال حدود سحب صحيحة للدينار العراقي', 'danger');
+                return;
+            }
+            
+            if (minWithdrawIQD > maxWithdrawIQD) {
+                showAlert('الحد الأدنى يجب أن يكون أقل من الحد الأقصى للدينار العراقي', 'danger');
+                return;
+            }
+            
+            if (!minWithdrawUSD || minWithdrawUSD <= 0 || !maxWithdrawUSD || maxWithdrawUSD <= 0) {
+                showAlert('يرجى إدخال حدود سحب صحيحة للدولار الأمريكي', 'danger');
+                return;
+            }
+            
+            if (minWithdrawUSD > maxWithdrawUSD) {
+                showAlert('الحد الأدنى يجب أن يكون أقل من الحد الأقصى للدولار الأمريكي', 'danger');
+                return;
+            }
+            
+            const settings = {
+                minWithdrawIQD: minWithdrawIQD,
+                maxWithdrawIQD: maxWithdrawIQD,
+                minWithdrawUSD: minWithdrawUSD,
+                maxWithdrawUSD: maxWithdrawUSD
+            };
+            
+            localStorage.setItem('system_settings', JSON.stringify(settings));
+            showAlert('تم تحديث حدود السحب بنجاح', 'success');
+            
+            // تحديث العرض
+            updateWithdrawLimitsDisplay();
+        });
+
+        // تحديث قائمة المستخدمين الذين سحبوا
+        let withdrawUsersUpdateInterval;
+
+        function updateWithdrawUsersList() {
+            let history = getWithdrawHistory(50);
+            
+            // إذا لم يكن هناك تاريخ، ننشئ بيانات وهمية
+            if (history.length === 0) {
+                history = generateWithdrawHistory(3000).slice(0, 50);
+            } else {
+                // نختار 50 عملية سحب عشوائية من الـ 3000
+                const allHistory = JSON.parse(localStorage.getItem('withdraw_history') || '[]');
+                const randomIndices = [];
+                while (randomIndices.length < 50 && randomIndices.length < allHistory.length) {
+                    const randomIndex = Math.floor(Math.random() * allHistory.length);
+                    if (!randomIndices.includes(randomIndex)) {
+                        randomIndices.push(randomIndex);
+                    }
+                }
+                history = randomIndices.map(index => allHistory[index]);
+            }
+            
+            withdrawUsersList.innerHTML = '';
+            
+            history.forEach((withdraw, index) => {
+                const userCard = document.createElement('div');
+                userCard.className = 'withdraw-user-card';
+                userCard.style.animationDelay = `${index * 0.05}s`;
+                
+                const firstName = withdraw.userName.split(' ')[0];
+                const amountClass = withdraw.currency === 'IQD' ? 'withdraw-amount iqd' : 'withdraw-amount usd';
+                const currencySymbol = withdraw.currency === 'IQD' ? 'ألف دينار عراقي' : 'دولار أمريكي';
+                
+                userCard.innerHTML = `
+                    <div class="withdraw-user-avatar">${firstName.charAt(0)}</div>
+                    <div class="withdraw-user-info">
+                        <h4>${withdraw.userName}</h4>
+                        <p>${withdraw.userTelegram}</p>
+                        <div class="${amountClass}">${withdraw.amount.toLocaleString()} ${currencySymbol}</div>
+                        <p>طريقة السحب: ${withdraw.method}</p>
+                        <div class="withdraw-time">
+                            <i class="fas fa-clock"></i>
+                            <span>${withdraw.timeAgo || WITHDRAW_TIMES[Math.floor(Math.random() * WITHDRAW_TIMES.length)]}</span>
+                        </div>
+                    </div>
+                `;
+                
+                withdrawUsersList.appendChild(userCard);
+            });
+            
+            // تحديث وقت التحديث الأخير
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('ar-IQ', { 
+                hour: '2-digit', 
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            lastUpdated.innerHTML = `<i class="fas fa-sync-alt"></i> تم التحديث ${timeString}`;
+            
+            // تأثير التحديث
+            lastUpdated.style.color = '#FFC107';
+            setTimeout(() => {
+                lastUpdated.style.color = '';
+            }, 2000);
+        }
+
+        function startWithdrawUsersUpdate() {
+            // تحديث فوري عند البدء
+            updateWithdrawUsersList();
+            
+            // ثم التحديث كل 30 ثانية
+            withdrawUsersUpdateInterval = setInterval(() => {
+                updateWithdrawUsersList();
+            }, 30000);
+        }
+
+        function stopWithdrawUsersUpdate() {
+            if (withdrawUsersUpdateInterval) {
+                clearInterval(withdrawUsersUpdateInterval);
+            }
+        }
+
+        // تهيئة النظام عند تحميل الصفحة
+        window.addEventListener('load', () => {
+            initializeSystem();
+            updateWithdrawLimitsDisplay();
+            
+            // توليد تاريخ السحب الوهمي إذا لم يكن موجوداً
+            if (!localStorage.getItem('withdraw_history') || JSON.parse(localStorage.getItem('withdraw_history')).length === 0) {
+                generateWithdrawHistory(3000);
+            }
+            
+            const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+            if (currentUser.userCode) {
+                // التحقق من التصاعد التلقائي وتطبيقه
+                let updatedUser = checkAndApplyAutoIncrement(currentUser);
+                
+                // التحقق من التداول وتطبيقه
+                updatedUser = checkAndApplyTrading(updatedUser);
+                
+                // تحديث واجهة المستخدم
+                userAvatar.textContent = updatedUser.fullName.charAt(0);
+                if (updatedUser.isAdmin) {
+                    userAvatar.classList.add('admin-avatar');
+                    userTelegram.textContent = "مشرف النظام";
+                    adminLink.style.display = 'block';
+                } else {
+                    userAvatar.classList.remove('admin-avatar');
+                    userTelegram.textContent = `@${updatedUser.telegramUsername}`;
+                    adminLink.style.display = 'none';
+                }
+                userFullName.textContent = updatedUser.fullName;
+                
+                // تحديث الرصيد
+                balanceIQD.textContent = `${formatIQD(updatedUser.balanceIQD)} <span class="balance-currency">ألف دينار عراقي</span>`;
+                balanceUSD.textContent = `${updatedUser.balanceUSD.toLocaleString()} <span class="balance-currency">دولار أمريكي</span>`;
+                
+                // تحديث معلومات التصاعد
+                updateAutoIncrementInfo(updatedUser);
+                
+                // عرض المعاملات
+                displayUserTransactions(updatedUser.userCode);
+                
+                // تحديث حالة التداول
+                updateTradingDisplay(updatedUser);
+                
+                // تخزين المستخدم المحدث
+                localStorage.setItem('currentUser', JSON.stringify(updatedUser));
+                
+                // إظهار التطبيق
+                loginContainer.style.display = 'none';
+                mainApp.style.display = 'block';
+            }
+            
+            // تحديث التداول كل ثانية
+            setInterval(() => {
+                const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+                if (currentUser.userCode && currentUser.tradingActive) {
+                    const timeRemaining = calculateTimeRemaining(currentUser);
+                    if (timeRemaining <= 0) {
+                        // إعادة تحميل المستخدم
+                        const updatedUser = checkAndApplyTrading(currentUser);
+                        if (updatedUser !== currentUser) {
+                            localStorage.setItem('currentUser', JSON.stringify(updatedUser));
+                            if (document.getElementById('tradingSection').style.display === 'block') {
+                                updateTradingDisplay(updatedUser);
+                            }
+                            if (document.getElementById('mainContent').style.display === 'grid') {
+                                balanceIQD.textContent = `${formatIQD(updatedUser.balanceIQD)} <span class="balance-currency">ألف دينار عراقي</span>`;
+                            }
+                        }
+                    } else if (document.getElementById('tradingSection').style.display === 'block') {
+                        tradingTime.textContent = formatTime(timeRemaining);
+                        tradingTimer.textContent = formatTime(timeRemaining);
+                    }
+                }
+            }, 1000);
+            
+            // التحقق من التصاعد التلقائي كل ساعة
+            setInterval(() => {
+                const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+                if (currentUser.userCode) {
+                    const updatedUser = checkAndApplyAutoIncrement(currentUser);
+                    if (updatedUser !== currentUser) {
+                        localStorage.setItem('currentUser', JSON.stringify(updatedUser));
+                        if (document.getElementById('mainContent').style.display === 'grid') {
+                            balanceIQD.textContent = `${formatIQD(updatedUser.balanceIQD)} <span class="balance-currency">ألف دينار عراقي</span>`;
+                            balanceUSD.textContent = `${updatedUser.balanceUSD.toLocaleString()} <span class="balance-currency">دولار أمريكي</span>`;
+                            displayUserTransactions(updatedUser.userCode);
+                            updateAutoIncrementInfo(updatedUser);
+                        }
+                    }
+                }
+            }, 60 * 60 * 1000); // كل ساعة
+        });
+    </script>
+</body>
+</html>
