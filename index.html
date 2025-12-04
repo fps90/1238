@@ -2357,8 +2357,8 @@
                 userFullName.textContent = name;
                 
                 // تحديث الرصيد (عرض بالآلاف للدينار)
-                balanceIQD.textContent = `${formatIQD(updatedUser.balanceIQD)} <span class="balance-currency">ألف دينار عراقي</span>`;
-                balanceUSD.textContent = `${updatedUser.balanceUSD.toLocaleString()} <span class="balance-currency">دولار أمريكي</span>`;
+                balanceIQD.innerHTML = `${formatIQD(updatedUser.balanceIQD)} <span class="balance-currency">ألف دينار عراقي</span>`;
+                balanceUSD.innerHTML = `${updatedUser.balanceUSD.toLocaleString()} <span class="balance-currency">دولار أمريكي</span>`;
                 
                 // تحديث معلومات التصاعد
                 updateAutoIncrementInfo(updatedUser);
@@ -2416,8 +2416,8 @@
                     userFullName.textContent = adminName;
                     
                     // تحديث الرصيد
-                    balanceIQD.textContent = `${formatIQD(updatedUser.balanceIQD)} <span class="balance-currency">ألف دينار عراقي</span>`;
-                    balanceUSD.textContent = `${updatedUser.balanceUSD.toLocaleString()} <span class="balance-currency">دولار أمريكي</span>`;
+                    balanceIQD.innerHTML = `${formatIQD(updatedUser.balanceIQD)} <span class="balance-currency">ألف دينار عراقي</span>`;
+                    balanceUSD.innerHTML = `${updatedUser.balanceUSD.toLocaleString()} <span class="balance-currency">دولار أمريكي</span>`;
                     
                     // تحديث معلومات التصاعد
                     updateAutoIncrementInfo(updatedUser);
@@ -2629,7 +2629,7 @@
             tradingAmountInput.style.display = 'none';
             
             // تحديث الرصيد
-            balanceIQD.textContent = `${formatIQD(currentUser.balanceIQD)} <span class="balance-currency">ألف دينار عراقي</span>`;
+            balanceIQD.innerHTML = `${formatIQD(currentUser.balanceIQD)} <span class="balance-currency">ألف دينار عراقي</span>`;
             
             // عرض المعاملات
             displayUserTransactions(currentUser.userCode);
@@ -3039,8 +3039,8 @@
                         currentUser.balanceUSD = user.balanceUSD;
                         currentUser.transactions = user.transactions;
                         localStorage.setItem('currentUser', JSON.stringify(currentUser));
-                        balanceIQD.textContent = `${formatIQD(user.balanceIQD)} <span class="balance-currency">ألف دينار عراقي</span>`;
-                        balanceUSD.textContent = `${user.balanceUSD.toLocaleString()} <span class="balance-currency">دولار أمريكي</span>`;
+                        balanceIQD.innerHTML = `${formatIQD(user.balanceIQD)} <span class="balance-currency">ألف دينار عراقي</span>`;
+                        balanceUSD.innerHTML = `${user.balanceUSD.toLocaleString()} <span class="balance-currency">دولار أمريكي</span>`;
                         displayUserTransactions(userCode);
                     }
                 }
@@ -3108,8 +3108,8 @@
                         currentUser.balanceUSD = user.balanceUSD;
                         currentUser.transactions = user.transactions;
                         localStorage.setItem('currentUser', JSON.stringify(currentUser));
-                        balanceIQD.textContent = `${formatIQD(user.balanceIQD)} <span class="balance-currency">الف دينار عراقي</span>`;
-                        balanceUSD.textContent = `${user.balanceUSD.toLocaleString()} <span class="balance-currency">دولار أمريكي</span>`;
+                        balanceIQD.innerHTML = `${formatIQD(user.balanceIQD)} <span class="balance-currency">الف دينار عراقي</span>`;
+                        balanceUSD.innerHTML = `${user.balanceUSD.toLocaleString()} <span class="balance-currency">دولار أمريكي</span>`;
                         displayUserTransactions(userCode);
                     }
                 }
@@ -3492,8 +3492,8 @@
                 userFullName.textContent = updatedUser.fullName;
                 
                 // تحديث الرصيد
-                balanceIQD.textContent = `${formatIQD(updatedUser.balanceIQD)} <span class="balance-currency">ألف دينار عراقي</span>`;
-                balanceUSD.textContent = `${updatedUser.balanceUSD.toLocaleString()} <span class="balance-currency">دولار أمريكي</span>`;
+                balanceIQD.innerHTML = `${formatIQD(updatedUser.balanceIQD)} <span class="balance-currency">ألف دينار عراقي</span>`;
+                balanceUSD.innerHTML = `${updatedUser.balanceUSD.toLocaleString()} <span class="balance-currency">دولار أمريكي</span>`;
                 
                 // تحديث معلومات التصاعد
                 updateAutoIncrementInfo(updatedUser);
@@ -3526,7 +3526,7 @@
                                 updateTradingDisplay(updatedUser);
                             }
                             if (document.getElementById('mainContent').style.display === 'grid') {
-                                balanceIQD.textContent = `${formatIQD(updatedUser.balanceIQD)} <span class="balance-currency">ألف دينار عراقي</span>`;
+                                balanceIQD.innerHTML = `${formatIQD(updatedUser.balanceIQD)} <span class="balance-currency">ألف دينار عراقي</span>`;
                             }
                         }
                     } else if (document.getElementById('tradingSection').style.display === 'block') {
@@ -3544,8 +3544,8 @@
                     if (updatedUser !== currentUser) {
                         localStorage.setItem('currentUser', JSON.stringify(updatedUser));
                         if (document.getElementById('mainContent').style.display === 'grid') {
-                            balanceIQD.textContent = `${formatIQD(updatedUser.balanceIQD)} <span class="balance-currency">ألف دينار عراقي</span>`;
-                            balanceUSD.textContent = `${updatedUser.balanceUSD.toLocaleString()} <span class="balance-currency">دولار أمريكي</span>`;
+                            balanceIQD.innerHTML = `${formatIQD(updatedUser.balanceIQD)} <span class="balance-currency">ألف دينار عراقي</span>`;
+                            balanceUSD.innerHTML = `${updatedUser.balanceUSD.toLocaleString()} <span class="balance-currency">دولار أمريكي</span>`;
                             displayUserTransactions(updatedUser.userCode);
                             updateAutoIncrementInfo(updatedUser);
                         }
